@@ -757,6 +757,49 @@ void main(){
       setZoomAt(zoom * (e.deltaY > 0 ? 1 / 1.12 : 1.12), e.clientX, e.clientY);
     }, { passive: false });
 
+    /* 手机手势：
+       - 单指横向快速滑动 → 上一张 / 下一张（放大状态下让位给平移）
+       - 双指捏合 → 缩放，以两指中点为准 */
+    let swipe = null;
+    let pinch = null;
+    const distOf = (a, b) => Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+
+    viewport.addEventListener('touchstart', (e) => {
+      if (e.touches.length >= 2) {
+        swipe = null;
+        const [a, b] = [e.touches[0], e.touches[1]];
+        pinch = { d: Math.max(1, distOf(a, b)), z: zoom };
+        return;
+      }
+      pinch = null;
+      const t = e.touches[0];
+      swipe = { x: t.clientX, y: t.clientY, t: Date.now() };
+    }, { passive: true });
+
+    viewport.addEventListener('touchmove', (e) => {
+      if (e.touches.length >= 2 && pinch) {
+        e.preventDefault(); // 压住浏览器自身的双指缩放，改用图片缩放
+        const [a, b] = [e.touches[0], e.touches[1]];
+        const midX = (a.clientX + b.clientX) / 2;
+        const midY = (a.clientY + b.clientY) / 2;
+        setZoomAt(pinch.z * (distOf(a, b) / pinch.d), midX, midY);
+      }
+    }, { passive: false });
+
+    viewport.addEventListener('touchend', (e) => {
+      if (!swipe) return;
+      const t = e.changedTouches[0];
+      const dx = t.clientX - swipe.x;
+      const dy = t.clientY - swipe.y;
+      const dt = Date.now() - swipe.t;
+      swipe = null;
+      if (zoom > 1.02) return; // 放大后滑动是看画面，不切图
+      if (dt < 700 && Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+        render(index + (dx < 0 ? 1 : -1));
+      }
+    });
+    viewport.addEventListener('touchcancel', () => { swipe = null; pinch = null; });
+
     // 照片下方的小滚动条：拖动即是缩放，以图片中心为准
     let sliding = false;
     const zoomFromEvent = (e) => {
@@ -1089,14 +1132,18 @@ void main(){
       const start = () => {
         if (flying) return;
         flying = true;
-        gate?.classList.add('is-hidden');
+        // 标题那行字往下滑出页面，滑完再把门页隐掉
+        gate?.classList.add('is-leaving');
+        window.setTimeout(() => gate?.classList.add('is-hidden'), 1400);
         t0.v = performance.now();
         requestAnimationFrame(drawIntro);
       };
 
-      introEl.addEventListener('click', start);
+      // 不再需要点击：门页出现后自动播放（点一下仍然能提前跳过）
+      const auto = window.setTimeout(start, 800);
+      introEl.addEventListener('click', () => { clearTimeout(auto); start(); });
       introEl.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); start(); }
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); clearTimeout(auto); start(); }
       });
     }
   }

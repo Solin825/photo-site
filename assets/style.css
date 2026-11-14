@@ -314,13 +314,18 @@ body.menu-open .site-header {
   transition: opacity .55s var(--ease);
 }
 .intro__gate.is-hidden { opacity: 0; pointer-events: none; }
+.intro__gate.is-leaving { pointer-events: none; }
 .intro__title {
   font-family: var(--serif);
   font-size: clamp(1.9rem, 4.4vw, 3.2rem);
   letter-spacing: .16em; text-indent: .16em;
   color: #f2ecdc;
   text-shadow: 0 0 40px rgba(214, 172, 100, .25);
+  transition: transform 1.3s cubic-bezier(.5, .02, .4, 1), opacity 1.3s ease;
 }
+/* 门页开场：这行字向下滑出页面（星流同时开始穿越） */
+.intro__gate.is-leaving .intro__title { transform: translateY(108vh); opacity: .85; }
+.intro__gate.is-leaving .intro__hint { opacity: 0; animation: none; transition: opacity .35s ease; }
 .intro__hint {
   font-family: var(--mono); font-size: 10.5px;
   letter-spacing: .5em; text-indent: .5em;
@@ -956,7 +961,7 @@ body.intro-playing { overflow: hidden; }
   margin: 0 auto;
   max-width: 720px;
   padding: 16px 22px 26px;
-  border-radius: 14px 14px 0 0;
+  border-radius: 0;
   border-top: 1px solid var(--line);
   background: rgba(12, 12, 11, .92);
   backdrop-filter: blur(22px) saturate(120%);
@@ -1001,6 +1006,16 @@ body.intro-playing { overflow: hidden; }
   font-size: 14.5px; line-height: 1.4;
   color: var(--ink);
   word-break: break-all;
+}
+
+/* 手势提示：只有手机显示 */
+.lb-hint {
+  display: none;
+  margin: -2px 0 0;
+  font-family: var(--mono);
+  font-size: 9.5px; letter-spacing: .18em;
+  color: rgba(245, 242, 233, .5);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, .6);
 }
 
 .lb-nav {
@@ -1232,9 +1247,12 @@ body.is-leaving .site-footer {
   .lb-exif { display: none; }
   .lb-exif__btn { display: inline-flex; }
   .lb-exif__none { font-size: 11px; letter-spacing: .1em; }
-  .lb-sheet { padding: 14px 18px 20px; border-radius: 12px 12px 0 0; }
+  .lb-sheet { padding: 14px 18px 20px; border-radius: 0; }
   .lb-sheet__grid { gap: 14px 16px; }
   .lb-sheet__cell dd { font-size: 14px; }
+  /* 手机上大图不留投影：模糊背景本来就是照片本身放大，投影会在照片下方糊出一条黑影 */
+  .lb-photo { box-shadow: none; }
+  .lb-hint { display: block; }
   .lb-zoom__bar { width: 148px; }
 
   /* 关于我：窄屏名字收小，保证明显小于头像 */

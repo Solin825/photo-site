@@ -123,12 +123,12 @@
     onScroll(() => scrollHint.classList.toggle('is-hidden', window.scrollY > 140));
   }
 
-  /* ---------- 07 Aurora：斜向极光飘带 + 闪烁星空（WebGL，仅非首页的大屏设备） ----------
-     手机/窄屏、粗指针设备不建画布：部分安卓 GPU 合成整屏 WebGL 层时会出竖状条纹，且更费电。
-     这种情况下退回 style.css 里的 CSS 极光层（不加 has-aurora，两层微光保持可见）。 */
-  const auroraEligible = !body.classList.contains('is-home')
-    && window.innerWidth >= 820
-    && !window.matchMedia('(pointer: coarse)').matches;
+  /* ---------- 07 Aurora：斜向极光飘带 + 闪烁星空（WebGL，仅非首页） ----------
+     手机端也启用，但走更保守的参数：渲染分辨率降到 0.7、保留绘制缓冲（preserveDrawingBuffer），
+     并把横幅的横向坐标按至少 1 展开，避免竖屏窄画布上帘褶退化成几条竖带。
+     若某台设备仍然渲染异常，把 auroraEligible 加一条 window.innerWidth >= 820 即可退回 CSS 极光层。 */
+  const narrowAurora = window.innerWidth < 820;
+  const auroraEligible = !body.classList.contains('is-home');
 
   if (auroraEligible) {
     const cv = document.createElement('canvas');
@@ -136,10 +136,12 @@
     cv.setAttribute('aria-hidden', 'true');
     body.appendChild(cv);
 
-    const SCALE = 0.8; // 渲染分辨率（0.55 时放大后偏糊，0.8 保留丝状细节）
+    const SCALE = narrowAurora ? 0.7 : 0.8; // 渲染分辨率（0.55 时放大后偏糊，0.8 保留丝状细节）
     const gl = cv.getContext('webgl', {
       alpha: false, antialias: false, depth: false, stencil: false,
-      premultipliedAlpha: false, preserveDrawingBuffer: false,
+      premultipliedAlpha: false,
+      /* 安卓整屏合成时，未保留的绘制缓冲会读到半帧，出现横向/竖向黑色撕裂条 */
+      preserveDrawingBuffer: true,
       powerPreference: 'high-performance',
     });
 
@@ -225,6 +227,8 @@ void main(){
   vec2 uv = gl_FragCoord.xy / u_res.xy;
   float asp = u_res.x / u_res.y;
   vec2 p = vec2((uv.x - 0.5) * asp, 0.5 - uv.y);  /* 中心为原点，y 向上 */
+  /* 竖屏画布很窄：横幅的横向跨度至少按 1.0 计，否则帘褶只铺满几个格子，会退化成几条竖带 */
+  vec2 rp = vec2((uv.x - 0.5) * max(asp, 1.0), 0.5 - uv.y);
   float g = uv.y;                                 /* 0 = 天顶，1 = 地平线 */
   float t = u_time;
 
@@ -268,13 +272,13 @@ void main(){
   vec3 aur = vec3(0.0);
   float v;
 
-  v = ribbon(p, 0.40, 0.02, 0.105, 0.052, 1.7, 0.28, across);
+  v = ribbon(rp, 0.40, 0.02, 0.105, 0.052, 1.7, 0.28, across);
   aur += bandColor(across) * v * 0.52;
 
-  v = ribbon(p, 0.58, -0.20, 0.080, 0.038, 4.3, 0.22, across);
+  v = ribbon(rp, 0.58, -0.20, 0.080, 0.038, 4.3, 0.22, across);
   aur += bandColor(across) * v * 0.34;
 
-  v = ribbon(p, 0.26, 0.24, 0.066, 0.068, 8.1, 0.17, across);
+  v = ribbon(rp, 0.26, 0.24, 0.066, 0.068, 8.1, 0.17, across);
   aur += bandColor(across) * v * 0.26;
 
   /* ---------- 雪地：地平线以下一片极淡的雪光，没有任何山影轮廓 ---------- */

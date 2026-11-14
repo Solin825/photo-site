@@ -458,6 +458,7 @@ body.intro-playing { overflow: hidden; }
 .scroll-hint {
   position: absolute;
   left: 50%;
+  transform: translateX(-50%); /* left:50% 只是把左边缘放到中线，必须再回移一半宽度才真正居中 */
   bottom: clamp(16px, 3vh, 30px);
   z-index: 3;
   padding: 10px;
@@ -1141,19 +1142,30 @@ body.is-leaving .site-footer {
   .books__body { padding-left: 18px; }
   .to-top-fab { width: 40px; height: 40px; right: 14px; bottom: 14px; }
 
-  /* 灯箱：窄屏参数行会换行，收紧字号与字距并让每行居中，避免图标与文字错位 */
+  /* 灯箱：窄屏参数行整行居中；图标与文字同处一个文本流，
+     一行放不下时自然折行（绝不让图标单独占一行） */
   .lb-nav { width: 30px; height: 30px; }
   .lb-nav svg { width: 13px; height: 13px; }
   .lb-nav--prev { left: 4px; }
   .lb-nav--next { right: 4px; }
   .lb-stage { gap: 10px; }
-  .lb-meta { min-height: 28px; gap: 4px; padding: 0 10px; }
+  .lb-meta { min-height: 28px; gap: 4px; padding: 0 8px; }
   .lb-exif {
-    font-size: 10px; letter-spacing: .05em; gap: 6px;
-    flex-wrap: wrap; justify-content: center; text-align: center; line-height: 1.45;
+    display: block;
+    font-size: 10.5px; letter-spacing: .05em; line-height: 1.7;
+    text-align: center;
   }
-  .lb-exif__icon { width: 12px; height: 12px; }
+  .lb-exif__icon {
+    display: inline-block;
+    width: 12px; height: 12px;
+    margin: 0 6px 0 0;
+    vertical-align: -1px;
+  }
   .lb-zoom__bar { width: 148px; }
+
+  /* 关于我：窄屏名字收小，保证明显小于头像 */
+  .profile__cn { font-size: 1.35rem; letter-spacing: .06em; }
+  .profile__en { font-size: 14px; letter-spacing: .26em; margin-top: 6px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

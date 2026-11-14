@@ -347,9 +347,9 @@ body.menu-open .site-header {
 /* 英文名在下：黑体，约中文的 1/4，字距拉开 */
 .intro__en {
   font-family: "Solin Sans", "Heiti SC", "黑体", "SimHei", "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
-  font-size: clamp(.48rem, 1.1vw, .8rem);
-  letter-spacing: .32em; text-indent: .32em;
-  color: rgba(242, 236, 220, .78);
+  font-size: clamp(.78rem, 2.9vw, 1.1rem);
+  letter-spacing: .26em; text-indent: .26em;
+  color: rgba(242, 236, 220, .82);
 }
 /* 门页开场：这行字在屏幕下方靠边停一会，然后淡出（不再移出画面） */
 .intro__gate.is-leaving .intro__title { opacity: 0; }

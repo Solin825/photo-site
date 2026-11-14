@@ -551,13 +551,77 @@ void main(){
   if (lightbox && shots.length) {
     const viewport = document.getElementById('lbViewport');
     const photo = document.getElementById('lbPhoto');
-    const exifEl = document.getElementById('lbExif');
     const bar = document.getElementById('lbBar');
     const thumb = document.getElementById('lbThumb');
     const zoomVal = document.getElementById('lbZoomVal');
     const prevBtn = document.getElementById('lbPrev');
     const nextBtn = document.getElementById('lbNext');
     const closeBtn = document.getElementById('lbClose');
+
+    /* ---- 拍摄参数：桌面显示一行文字（无参数时不显示图标）；
+       手机显示「查看拍摄参数」按钮，点开底部参数面板 ---- */
+    const exifInline = document.getElementById('lbExifInline');
+    const exifTextEl = document.getElementById('lbExif');
+    const exifBtn = document.getElementById('lbExifBtn');
+    const exifNone = document.getElementById('lbExifNone');
+    const sheet = document.getElementById('lbSheet');
+    const sheetGrid = document.getElementById('lbSheetGrid');
+    const sheetClose = document.getElementById('lbSheetClose');
+
+    const EXIF_FIELDS = [
+      ['device', '机身'], ['focal', '焦距'], ['aperture', '光圈'],
+      ['shutter', '快门'], ['iso', '感光度'], ['date', '拍摄时间'],
+    ];
+
+    // data-exif 的格式是「设备 · 焦距 · 光圈 · 快门 · ISO · 日期」，按特征归位
+    const parseExif = (text) => {
+      const out = {};
+      String(text || '').split('·').map((s) => s.trim()).filter(Boolean).forEach((tok) => {
+        if (/^iso/i.test(tok)) out.iso = tok.replace(/^iso/i, 'ISO');
+        else if (/^f\//i.test(tok)) out.aperture = tok.toLowerCase();
+        else if (/mm$/i.test(tok)) out.focal = tok;
+        else if (/^\d+\/\d+\s?s$/i.test(tok) || /^\d+(\.\d+)?\s?s$/i.test(tok)) out.shutter = tok;
+        else if (/^\d{4}-\d{2}-\d{2}$/.test(tok)) out.date = tok;
+        else if (!out.device) out.device = tok;
+      });
+      return out;
+    };
+
+    const closeSheet = () => {
+      if (!sheet) return;
+      sheet.classList.remove('is-open');
+      exifBtn?.setAttribute('aria-expanded', 'false');
+    };
+
+    const fillSheet = (fields) => {
+      if (!sheetGrid) return;
+      sheetGrid.textContent = '';
+      EXIF_FIELDS.forEach(([key, label]) => {
+        const value = fields[key];
+        if (!value) return;
+        const cell = document.createElement('div');
+        cell.className = 'lb-sheet__cell';
+        const dt = document.createElement('dt');
+        dt.textContent = label;
+        const dd = document.createElement('dd');
+        dd.textContent = value;
+        cell.append(dt, dd);
+        sheetGrid.appendChild(cell);
+      });
+    };
+
+    // 有参数：桌面一行文字 + 手机按钮；无参数：只显示「EXIF 已丢失」，不出现任何图标
+    const renderMeta = (raw) => {
+      const text = String(raw || '').trim();
+      const missing = !text || /丢失|lost/i.test(text);
+      closeSheet();
+      exifInline?.classList.toggle('is-off', missing);
+      exifBtn?.classList.toggle('is-off', missing);
+      exifNone?.classList.toggle('is-off', !missing);
+      if (missing) { fillSheet({}); return; }
+      if (exifTextEl) exifTextEl.textContent = text;
+      fillSheet(parseExif(text));
+    };
 
     const MIN_Z = 1;
     const MAX_Z = 4;
@@ -640,7 +704,7 @@ void main(){
           : (item.querySelector('.shot__img')?.style.backgroundImage || '');
         photo.style.backgroundImage = bg;
         lightbox.style.setProperty('--lb-bg', absBg(bg));
-        exifEl.textContent = item.dataset.exif || '';
+        renderMeta(item.dataset.exif);
         zoom = MIN_Z;
         fitBox();
         applyZoom();
@@ -670,6 +734,7 @@ void main(){
 
     const closeBox = () => {
       if (!lightbox.classList.contains('is-open')) return;
+      closeSheet();
       lightbox.classList.remove('is-open');
       lightbox.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
@@ -721,6 +786,15 @@ void main(){
     closeBtn?.addEventListener('click', closeBox);
     lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeBox(); });
 
+    // 参数面板：按钮展开/收起，面板内的点击不冒泡到灯箱背景
+    exifBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = sheet ? sheet.classList.toggle('is-open') : false;
+      exifBtn.setAttribute('aria-expanded', String(open));
+    });
+    sheetClose?.addEventListener('click', (e) => { e.stopPropagation(); closeSheet(); });
+    sheet?.addEventListener('click', (e) => e.stopPropagation());
+
     // 窗口尺寸变化：灯箱开着时按新视口重算基准尺寸，保留当前缩放倍率
     onResize(() => {
       if (!lightbox.classList.contains('is-open')) return;
@@ -732,7 +806,11 @@ void main(){
 
     document.addEventListener('keydown', (e) => {
       if (!lightbox.classList.contains('is-open')) return;
-      if (e.key === 'Escape') closeBox();
+      if (e.key === 'Escape') {
+        // 参数面板开着时先收面板，再退出灯箱
+        if (sheet && sheet.classList.contains('is-open')) closeSheet();
+        else closeBox();
+      }
       else if (e.key === 'ArrowLeft') render(index - 1);
       else if (e.key === 'ArrowRight') render(index + 1);
       else if (e.key === '+' || e.key === '=') setZoomCenter(zoom * 1.15);

@@ -914,15 +914,94 @@ body.intro-playing { overflow: hidden; }
   text-align: center;
   min-height: 34px;
 }
+/* 桌面：一行参数。灯箱背景是被模糊放大的照片，颜色偏亮，
+   所以文字用接近白色 + 暗投影，才能和背景拉开区分度 */
 .lb-exif {
   display: inline-flex; align-items: center; gap: 8px;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 400;
   font-size: 11.5px;
   letter-spacing: .1em;
-  color: var(--muted);
+  color: rgba(245, 242, 233, .92);
+  text-shadow: 0 1px 10px rgba(0, 0, 0, .7), 0 0 2px rgba(0, 0, 0, .5);
 }
 .lb-exif__icon { width: 14px; height: 14px; flex: 0 0 auto; user-select: none; -webkit-user-drag: none; }
+
+/* 手机：只露一个文字按钮（图标在左），点开底部参数面板 */
+.lb-exif__btn {
+  display: none;
+  align-items: center; gap: 7px;
+  padding: 4px 2px;
+  font-size: 11.5px; letter-spacing: .12em;
+  color: rgba(245, 242, 233, .92);
+  text-shadow: 0 1px 10px rgba(0, 0, 0, .7);
+}
+.lb-exif__btn-icon { width: 13px; height: 13px; flex: 0 0 auto; user-select: none; -webkit-user-drag: none; }
+.lb-exif__btn[aria-expanded="true"] { color: #fff; }
+
+/* 没有参数：只留一行字，不出现任何图标 */
+.lb-exif__none {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11.5px; letter-spacing: .14em;
+  color: rgba(245, 242, 233, .82);
+  text-shadow: 0 1px 10px rgba(0, 0, 0, .7), 0 0 2px rgba(0, 0, 0, .5);
+}
+.is-off { display: none !important; }
+
+/* --- 拍摄参数面板：从底部滑出的抽屉（只有手机叫得出来） --- */
+.lb-sheet {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  z-index: 4;
+  margin: 0 auto;
+  max-width: 720px;
+  padding: 16px 22px 26px;
+  border-radius: 14px 14px 0 0;
+  border-top: 1px solid var(--line);
+  background: rgba(12, 12, 11, .92);
+  backdrop-filter: blur(22px) saturate(120%);
+  -webkit-backdrop-filter: blur(22px) saturate(120%);
+  box-shadow: 0 -18px 50px -24px rgba(0, 0, 0, .8);
+  transform: translateY(101%);
+  visibility: hidden;
+  transition: transform .36s var(--ease), visibility .36s;
+}
+.lb-sheet.is-open { transform: none; visibility: visible; }
+.lb-sheet__head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: 14px;
+}
+.lb-sheet__title {
+  font-family: var(--mono);
+  font-size: 10.5px; letter-spacing: .22em;
+  color: rgba(214, 172, 100, .95); /* 与全站金色呼应 */
+}
+.lb-sheet__close {
+  width: 30px; height: 30px; border-radius: 50%;
+  display: grid; place-items: center;
+  border: 1px solid var(--line);
+  color: var(--ink-2);
+}
+.lb-sheet__close svg { width: 13px; height: 13px; }
+.lb-sheet__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 20px;
+  margin: 0; padding: 0;
+}
+.lb-sheet__cell { min-width: 0; }
+.lb-sheet__cell dt {
+  font-family: var(--mono);
+  font-size: 9.5px; letter-spacing: .18em;
+  color: var(--muted);
+  margin-bottom: 5px;
+}
+.lb-sheet__cell dd {
+  margin: 0;
+  font-size: 14.5px; line-height: 1.4;
+  color: var(--ink);
+  word-break: break-all;
+}
 
 .lb-nav {
   position: absolute; top: 50%;
@@ -1142,25 +1221,20 @@ body.is-leaving .site-footer {
   .books__body { padding-left: 18px; }
   .to-top-fab { width: 40px; height: 40px; right: 14px; bottom: 14px; }
 
-  /* 灯箱：窄屏参数行整行居中；图标与文字同处一个文本流，
-     一行放不下时自然折行（绝不让图标单独占一行） */
+  /* 灯箱：手机上不显示桌面那一行参数，只露「查看拍摄参数」按钮；
+     有参数时才出现按钮，没参数只有一行「EXIF 已丢失」 */
   .lb-nav { width: 30px; height: 30px; }
   .lb-nav svg { width: 13px; height: 13px; }
   .lb-nav--prev { left: 4px; }
   .lb-nav--next { right: 4px; }
   .lb-stage { gap: 10px; }
-  .lb-meta { min-height: 28px; gap: 4px; padding: 0 8px; }
-  .lb-exif {
-    display: block;
-    font-size: 10.5px; letter-spacing: .05em; line-height: 1.7;
-    text-align: center;
-  }
-  .lb-exif__icon {
-    display: inline-block;
-    width: 12px; height: 12px;
-    margin: 0 6px 0 0;
-    vertical-align: -1px;
-  }
+  .lb-meta { min-height: 26px; gap: 3px; padding: 0 8px; }
+  .lb-exif { display: none; }
+  .lb-exif__btn { display: inline-flex; }
+  .lb-exif__none { font-size: 11px; letter-spacing: .1em; }
+  .lb-sheet { padding: 14px 18px 20px; border-radius: 12px 12px 0 0; }
+  .lb-sheet__grid { gap: 14px 16px; }
+  .lb-sheet__cell dd { font-size: 14px; }
   .lb-zoom__bar { width: 148px; }
 
   /* 关于我：窄屏名字收小，保证明显小于头像 */

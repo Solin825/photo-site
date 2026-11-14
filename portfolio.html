@@ -599,14 +599,32 @@
           <div class="lb-photo" id="lbPhoto"></div>
         </div>
         <figcaption class="lb-meta">
-          <span class="lb-exif"
+          <span class="lb-exif" id="lbExifInline"
             ><img
               class="lb-exif__icon"
+              id="lbExifIcon"
               src="assets/icons/shutter.png"
               alt=""
               draggable="false"
             /><span id="lbExif"></span
           ></span>
+
+          <button
+            class="lb-exif__btn is-off"
+            id="lbExifBtn"
+            type="button"
+            aria-expanded="false"
+            aria-controls="lbSheet"
+          >
+            <img
+              class="lb-exif__btn-icon"
+              src="assets/icons/shutter.png"
+              alt=""
+              draggable="false"
+            /><span>查看拍摄参数</span>
+          </button>
+
+          <span class="lb-exif__none is-off" id="lbExifNone">EXIF 已丢失</span>
         </figcaption>
         <div class="lb-zoom" aria-label="缩放">
           <div class="lb-zoom__bar" id="lbBar">
@@ -615,6 +633,18 @@
           <span class="lb-zoom__val" id="lbZoomVal">100%</span>
         </div>
       </figure>
+
+      <div class="lb-sheet" id="lbSheet" role="group" aria-label="拍摄参数">
+        <div class="lb-sheet__head">
+          <span class="lb-sheet__title">拍摄参数 · EXIF</span>
+          <button class="lb-sheet__close" id="lbSheetClose" type="button" aria-label="收起参数">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          </button>
+        </div>
+        <dl class="lb-sheet__grid" id="lbSheetGrid"></dl>
+      </div>
     </div>
 
     <script src="assets/main.js"></script>

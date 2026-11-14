@@ -184,6 +184,6 @@ git push
   代理软件换端口后要重配一次，否则 `git push` 会报 `Recv failure: Connection was reset`（直连 GitHub 就是这样被重置的，与仓库无关）。
 - **母库 `E:\PhotoArchive` 只读**，脚本不写入、不改名任何原图。
 - `portfolio.html` 的 gallery 区块由脚本生成，手改会被下次运行覆盖。
-- 三页 HTML 换行符统一 LF；`sync_nav.py` 固定写 LF。
+- 三页 HTML 换行符统一 LF；`sync_nav.py` 固定写 LF。`build_wall.py` 写 `portfolio.html` 时显式指定 `newline="\n"`（2026-11-14 修正：Windows 下 text 模式默认把 `\n` 写成 CRLF，会让整篇 622 行全部变成"已修改"，diff 全是噪音）。
 - 交付前清空 `E:\WS\webpage\.shots`（验证截图目录）。
 - 未经允许不要往页面里加任何内容（文字、图标、说明、图例都不行）。

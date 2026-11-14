@@ -54,6 +54,8 @@
 
 /* ---------- 02 Reset ---------- */
 *, *::before, *::after { box-sizing: border-box; }
+/* 安卓（Edge/Chrome）点按按钮或文字会出现默认蓝色底纹方块，关掉 */
+* { -webkit-tap-highlight-color: transparent; }
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
@@ -128,7 +130,7 @@ body:not(.is-home)::after {
   height: 100%;
   z-index: -1;
   pointer-events: none;
-  filter: saturate(108%);
+  /* 不加 filter：整屏 WebGL 层再加 CSS 滤镜，安卓 GPU 上容易出现横向/纵向拼接条纹 */
   transition: opacity .8s var(--ease);
 }
 /* 夜空兜底色（画布不透明，整屏覆盖） */
@@ -137,9 +139,10 @@ body:not(.is-home) {
     radial-gradient(130% 100% at 50% -12%, #0a1526 0%, #060c18 45%, #03060d 80%),
     #03060d;
 }
-/* 画布自己就是夜空，底层微光关掉，避免两套极光打架 */
-body:not(.is-home)::before,
-body:not(.is-home)::after { opacity: 0; }
+/* 画布自己就是夜空，底层微光关掉，避免两套极光打架；
+   手机端不建画布（不加 has-aurora），这两层微光就是页面上的极光 */
+body.has-aurora::before,
+body.has-aurora::after { opacity: 0; }
 @keyframes aurora-a {
   0%   { transform: translate3d(-2.4%, -1.2%, 0) scale(1); }
   100% { transform: translate3d(3.2%, 2%, 0) scale(1.1); }
@@ -1100,12 +1103,25 @@ body.is-leaving .site-footer {
 
   .palette__row { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 
-  .lb-viewport { width: 94vw; height: 58vh; }
-  .lb-nav { width: 38px; height: 38px; }
+  .lb-stage { width: 100%; }
+  .lb-viewport { width: calc(100% - 96px); height: 56vh; }
+  .lb-nav { width: 34px; height: 34px; }
+  .lb-nav--prev { left: 8px; }
+  .lb-nav--next { right: 8px; }
+}
+
+@media (max-width: 820px) {
+  /* 手机端用 CSS 极光层代替 WebGL 画布，模糊半径小一点，减轻 GPU 负担 */
+  .lightbox { padding: 56px 8px 14px; }
+  body:not(.is-home)::before { filter: blur(34px) saturate(130%); }
+  body:not(.is-home)::after { filter: blur(38px) saturate(115%); }
 }
 
 @media (max-width: 620px) {
-  .hero { padding-bottom: 44px; }
+  /* 底部留够空间给向下箭头，否则箭头会压在按钮上 */
+  .hero { padding-bottom: 96px; }
+  .scroll-hint { bottom: 12px; padding: 6px; }
+  .scroll-hint svg { width: 18px; height: 18px; }
   .hero__title { font-size: clamp(2.7rem, 15vw, 4rem); letter-spacing: .14em; }
   .hero__en { font-size: .9rem; letter-spacing: .4em; }
   .hero__btn { padding: 11px 22px; font-size: 13px; }
@@ -1124,6 +1140,20 @@ body.is-leaving .site-footer {
   .swatch__hex { font-size: 7.5px; }
   .books__body { padding-left: 18px; }
   .to-top-fab { width: 40px; height: 40px; right: 14px; bottom: 14px; }
+
+  /* 灯箱：窄屏参数行会换行，收紧字号与字距并让每行居中，避免图标与文字错位 */
+  .lb-nav { width: 30px; height: 30px; }
+  .lb-nav svg { width: 13px; height: 13px; }
+  .lb-nav--prev { left: 4px; }
+  .lb-nav--next { right: 4px; }
+  .lb-stage { gap: 10px; }
+  .lb-meta { min-height: 28px; gap: 4px; padding: 0 10px; }
+  .lb-exif {
+    font-size: 10px; letter-spacing: .05em; gap: 6px;
+    flex-wrap: wrap; justify-content: center; text-align: center; line-height: 1.45;
+  }
+  .lb-exif__icon { width: 12px; height: 12px; }
+  .lb-zoom__bar { width: 148px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

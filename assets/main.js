@@ -123,8 +123,14 @@
     onScroll(() => scrollHint.classList.toggle('is-hidden', window.scrollY > 140));
   }
 
-  /* ---------- 07 Aurora：斜向极光飘带 + 闪烁星空（WebGL，仅非首页） ---------- */
-  if (!body.classList.contains('is-home')) {
+  /* ---------- 07 Aurora：斜向极光飘带 + 闪烁星空（WebGL，仅非首页的大屏设备） ----------
+     手机/窄屏、粗指针设备不建画布：部分安卓 GPU 合成整屏 WebGL 层时会出竖状条纹，且更费电。
+     这种情况下退回 style.css 里的 CSS 极光层（不加 has-aurora，两层微光保持可见）。 */
+  const auroraEligible = !body.classList.contains('is-home')
+    && window.innerWidth >= 820
+    && !window.matchMedia('(pointer: coarse)').matches;
+
+  if (auroraEligible) {
     const cv = document.createElement('canvas');
     cv.className = 'aurora-canvas';
     cv.setAttribute('aria-hidden', 'true');
@@ -335,7 +341,13 @@ void main(){
       return true;
     };
 
-    if (gl && setup()) {
+    /* highp 不支持的 GPU 上，极光细丝和帘褶会退化成条带，宁可不画 */
+    const fragHigh = gl && gl.getShaderPrecisionFormat
+      ? gl.getShaderPrecisionFormat(gl.FRAGMENT_SHADER, gl.HIGH_FLOAT).precision
+      : 0;
+
+    if (gl && fragHigh >= 16 && setup()) {
+      body.classList.add('has-aurora');
       const resize = () => {
         const w = Math.max(1, Math.round(window.innerWidth * SCALE));
         const h = Math.max(1, Math.round(window.innerHeight * SCALE));

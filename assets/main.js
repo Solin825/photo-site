@@ -1132,9 +1132,9 @@ void main(){
       const start = () => {
         if (flying) return;
         flying = true;
-        // 标题那行字往下滑出页面，滑完再把门页隐掉
-        gate?.classList.add('is-leaving');
-        window.setTimeout(() => gate?.classList.add('is-hidden'), 1400);
+        // 标题在屏幕下方停一会再淡出（不再滑出画面）
+        window.setTimeout(() => gate?.classList.add('is-leaving'), 1400);
+        window.setTimeout(() => gate?.classList.add('is-hidden'), 2600);
         t0.v = performance.now();
         requestAnimationFrame(drawIntro);
       };

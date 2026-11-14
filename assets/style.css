@@ -307,8 +307,9 @@ body.menu-open .site-header {
 .intro__gate {
   position: absolute; inset: 0;
   display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
+  align-items: center; justify-content: flex-end;
   gap: 26px;
+  padding-bottom: 12vh;
   cursor: pointer;
   background: radial-gradient(46% 42% at 50% 46%, rgba(214, 172, 100, .1), transparent 75%);
   transition: opacity .55s var(--ease);
@@ -321,10 +322,10 @@ body.menu-open .site-header {
   letter-spacing: .16em; text-indent: .16em;
   color: #f2ecdc;
   text-shadow: 0 0 40px rgba(214, 172, 100, .25);
-  transition: transform 1.3s cubic-bezier(.5, .02, .4, 1), opacity 1.3s ease;
+  transition: opacity 1s ease;
 }
-/* 门页开场：这行字向下滑出页面（星流同时开始穿越） */
-.intro__gate.is-leaving .intro__title { transform: translateY(108vh); opacity: .85; }
+/* 门页开场：这行字在屏幕下方靠边停一会，然后淡出（不再移出画面） */
+.intro__gate.is-leaving .intro__title { opacity: 0; }
 .intro__gate.is-leaving .intro__hint { opacity: 0; animation: none; transition: opacity .35s ease; }
 .intro__hint {
   font-family: var(--mono); font-size: 10.5px;
@@ -1177,7 +1178,7 @@ body.is-leaving .site-footer {
   .nav {
     position: fixed; inset: 0;
     flex-direction: column; justify-content: center; align-items: flex-start;
-    gap: 10px;
+    gap: 0;
     padding: 0 var(--pad);
     background: var(--bg);
     transform: translateY(-100%);
@@ -1186,8 +1187,12 @@ body.is-leaving .site-footer {
     z-index: 90;
   }
   .nav.is-open { transform: translateY(0); opacity: 1; visibility: visible; }
+  /* 手机端每一项整行都能点（文字右侧的空白也算命中区） */
   .nav__link {
-    font-family: var(--serif); font-size: 1.9rem; line-height: 1.6;
+    display: flex; align-items: center;
+    width: 100%;
+    padding: 12px 0;
+    font-family: var(--serif); font-size: 1.9rem; line-height: 1.4;
     color: var(--ink);
   }
   .nav__link::after { display: none; }

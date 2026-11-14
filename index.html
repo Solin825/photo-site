@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>刘松林 Solin</title>
+<meta name="description" content="刘松林（Solin）的个人主页。" />
+<meta property="og:title" content="刘松林 Solin" />
+<meta property="og:type" content="website" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%23111110'/><text x='50' y='68' font-size='52' font-family='Georgia,serif' fill='%23f7f6f4' text-anchor='middle'>S</text></svg>" />
+<script>
+  (function () {
+    try {
+            // 首帧即隐藏原生光标，避免切页时闪一下白色箭头
+      if (window.matchMedia('(pointer: fine)').matches &&
+          !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('cursor-pending');
+      }
+      // 本会话已播过入场动画：立即标记，避免切回首页时门页闪现
+      if (sessionStorage.getItem('solin-intro') === '1') {
+        document.documentElement.classList.add('intro-played');
+      }
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="assets/style.css" />
+</head>
+<body class="is-entering is-home">
+<div class="intro" id="intro" aria-hidden="true">
+  <canvas></canvas>
+  <div class="intro__gate" id="introGate">
+    <h2 class="intro__title">Solin的个人网站</h2>
+    <p class="intro__hint">点击进入</p>
+  </div>
+</div>
+<div class="veil" aria-hidden="true"></div>
+
+<!-- nav:start · 由 partials/nav.html 生成，改完跑 python tools/sync_nav.py -->
+<header class="site-header">
+  <a class="brand" href="index.html">
+    <span class="brand__mark">S</span>
+    <span class="brand__text">刘松林<em>Solin</em></span>
+  </a>
+
+  <nav class="nav" id="nav">
+    <a href="index.html" class="nav__link is-active">首页</a>
+    <a href="portfolio.html" class="nav__link">照片墙</a>
+    <a href="about.html" class="nav__link">关于我</a>
+  </nav>
+
+  <div class="header-actions">
+    <button class="menu-btn" id="menuBtn" aria-label="打开菜单" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
+<!-- nav:end -->
+
+<main id="top">
+
+  <section class="hero">
+    <div class="hero__photo hero__photo--sunrise is-on" aria-hidden="true"></div>
+    <div class="hero__photo hero__photo--bridge" aria-hidden="true"></div>
+
+    <div class="wrap hero__name">
+      <div class="hero__eyebrow reveal">
+        <span class="hero__rule" aria-hidden="true"></span>
+        <span class="hero__eyebrow-cn">感受世界</span>
+        <span class="hero__eyebrow-en">记录所见</span>
+      </div>
+      <h1 class="hero__title reveal" style="--d:.08s">刘松林</h1>
+      <span class="hero__en reveal" style="--d:.16s">SOLIN</span>
+      <div class="hero__actions reveal" style="--d:.26s">
+        <a class="hero__btn hero__btn--solid" href="portfolio.html">
+          前往照片墙
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="hero__btn hero__btn--ghost" href="about.html">了解作者</a>
+      </div>
+    </div>
+
+    <button class="scroll-hint" id="scrollHint" aria-label="向下滑动查看更多">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+    </button>
+  </section>
+
+  <section class="why" id="why">
+    <div class="wrap">
+      <div class="why__item reveal">
+        <h2 class="why__title">为什么要建立这个网站？</h2>
+        <div class="why__answer">
+          <p>多年前，当我拍出第一张还算满意的照片时，便有了记录的念头。记录的方法本有不少，存于手机相册、电脑硬盘是一种，发至朋友圈或别处平台亦是一种。只是这些方法都有个短处：内容零散、混杂，且社交平台还会折损照片画质。我便想着，寻一处地方集中存放，网站便是个合适的去处。可彼时搭建网站，并非易事。</p>
+          <p>后来有了属于自己的电脑，陆续接触到不少设计精妙的站点，像Apple、National Geographic、《黑神话：悟空》的官网。还有Chrome的交互动画，深得我心。那时便非常想有一方独属于自己的小站。</p>
+          <p>如今AI工具神通广大，于我这门外汉而言，简直就是天赐的机缘。此站点，便是借助AI方才建成的。</p>
+          <p>然而这些，都只是外在契机。建此站的本心，是希望自己能够频繁地记录生活。人的记性本就有限，纵使行路匆匆，走得再远，也当偶尔慢下脚步，好好感受这世间光景。</p>
+        </div>
+      </div>
+
+      <div class="why__item reveal">
+        <h2 class="why__title">这个网站主要用来做什么？</h2>
+        <div class="why__answer">
+          <p>如先前所言，搭建此站，只为记下寻常光景。会放些闲时拍下的照片，还有读过的书册。至于学习、工作、科研之事，自是没有的了。</p>
+        </div>
+      </div>
+
+      <div class="why__item reveal">
+        <h2 class="why__title">会保留下去吗？</h2>
+        <div class="why__answer">
+          <p>不知日后能否一直留存，但我会尽力守住它。眼下内容尚少，不过没关系，愿意记录，本身就很好。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer__inner">
+    <span>© <span id="year">2026</span> 刘松林 Solin</span>
+  </div>
+</footer>
+
+<button class="to-top-fab" id="toTop" aria-label="回到顶部">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+</button>
+
+<script src="assets/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>关于我 — 刘松林 Solin</title>
+<meta name="description" content="刘松林：在读研究生，喜欢风光摄影、阅读、逛公园。" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%23111110'/><text x='50' y='68' font-size='52' font-family='Georgia,serif' fill='%23f7f6f4' text-anchor='middle'>S</text></svg>" />
+<script>
+  (function () {
+    try {
+            // 首帧即隐藏原生光标，避免切页时闪一下白色箭头
+      if (window.matchMedia('(pointer: fine)').matches &&
+          !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('cursor-pending');
+      }
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="assets/style.css" />
+</head>
+<body class="is-entering">
+<div class="veil" aria-hidden="true"></div>
+
+<!-- nav:start · 由 partials/nav.html 生成，改完跑 python tools/sync_nav.py -->
+<header class="site-header">
+  <a class="brand" href="index.html">
+    <span class="brand__mark">S</span>
+    <span class="brand__text">刘松林<em>Solin</em></span>
+  </a>
+
+  <nav class="nav" id="nav">
+    <a href="index.html" class="nav__link">首页</a>
+    <a href="portfolio.html" class="nav__link">照片墙</a>
+    <a href="about.html" class="nav__link is-active">关于我</a>
+  </nav>
+
+  <div class="header-actions">
+    <button class="menu-btn" id="menuBtn" aria-label="打开菜单" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
+<!-- nav:end -->
+
+<main id="top" class="subpage">
+
+  <section class="section about" id="about">
+    <div class="wrap">
+
+      <div class="profile reveal">
+        <div class="avatar" role="img" aria-label="小羊头像"><img src="assets/img/avatar.jpg" alt="小羊头像"></div>
+        <div class="profile__names">
+          <h1 class="profile__cn">刘松林</h1>
+          <span class="profile__en mono">SOLIN</span>
+        </div>
+      </div>
+
+      <p class="profile__intro reveal" style="--d:.08s">
+        故乡广东茂名，03年出生，在读研究生，喜欢风光摄影、阅读、逛公园；
+        比起小狗，更喜欢小猫；喜欢绿色系，最喜欢的颜色是浅浅的鼠尾草绿；
+        身高175，体重……在增加中；长相嘛，皮肤黝黑，平平无奇；
+        最喜欢的演员是<span class="gyj-ref"><button class="gyj-ref__name" type="button" aria-expanded="false">고윤정</button><span class="gyj-ref__menu" role="menu"><a class="gyj-ref__item" href="https://www.instagram.com/goyounjung/" target="_blank" rel="noopener">Instagram</a><a class="gyj-ref__item" href="https://zh.wikipedia.org/wiki/%E9%AB%98%E8%83%A4%E7%A6%8E" target="_blank" rel="noopener">Wikipedia</a><a class="gyj-ref__item" href="https://namu.wiki/w/%EA%B3%A0%EC%9C%A4%EC%A0%95" target="_blank" rel="noopener">Namuwiki</a></span></span>；最喜欢的摄影师是<a class="intro-link" href="https://cn.chuweimin.com/" target="_blank" rel="noopener">储卫民（Thomas 看看世界）</a>；
+        大概就这些，以后应该会补充……
+      </p>
+
+      <div class="subhead reveal" style="--d:.18s">
+        <h3>看过的书</h3>
+        <span class="mono">READING LIST · 按阅读时间排序</span>
+      </div>
+
+      <ul class="books reveal" style="--d:.22s">
+        <li>
+          <div class="books__row" role="button" tabindex="0" aria-expanded="false">
+            <span class="books__no mono">01</span>
+            <span class="books__title">海底两万里</span>
+            <span class="books__sign" aria-hidden="true"></span>
+          </div>
+          <div class="books__detail">
+            <div class="books__inner">
+              <div class="books__body">
+                <p class="books__author">儒勒·凡尔纳<span class="books__country">（法国 · France）</span></p>
+                <p class="books__desc">“海洋三部曲”的第二部。博物学家阿龙纳斯在追捕海上“怪物”时落水，被尼摩船长的鹦鹉螺号潜艇救起，从此跟着这艘潜艇穿行海底森林、珊瑚墓园、沉没的大陆与南极冰盖。全书最好看的地方，是那种十九世纪人才有的自信：把当时已知的海洋知识全部写进一场冒险，还顺手预言了后来的潜艇。</p>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="books__row" role="button" tabindex="0" aria-expanded="false">
+            <span class="books__no mono">02</span>
+            <span class="books__title">绿野仙踪</span>
+            <span class="books__sign" aria-hidden="true"></span>
+          </div>
+          <div class="books__detail">
+            <div class="books__inner">
+              <div class="books__body">
+                <p class="books__author">莱曼·弗兰克·鲍姆<span class="books__country">（美国 · United States）</span></p>
+                <p class="books__desc">美国童话的代表作。小女孩多萝西被龙卷风连人带屋卷到奥兹国，为了回家，她沿着黄砖路去翡翠城找巫师，路上遇见想要脑子的稻草人、想要心的铁皮人和想要胆量的狮子。读的时候年纪小，只觉得热闹；长大再想，四个角色缺的其实都是自己早有的东西。</p>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="books__row" role="button" tabindex="0" aria-expanded="false">
+            <span class="books__no mono">03</span>
+            <span class="books__title">三体（三部曲）</span>
+            <span class="books__sign" aria-hidden="true"></span>
+          </div>
+          <div class="books__detail">
+            <div class="books__inner">
+              <div class="books__body">
+                <p class="books__author">刘慈欣<span class="books__country">（中国 · China）</span></p>
+                <p class="books__desc">从红岸基地那一次朝宇宙的呼叫开始，一个文明的命运被拉长到四百年、再拉长到宇宙的尽头。第一部是悬疑与历史，第二部是博弈与选择，第三部直接把尺度推到维度与时间之外。亚洲第一部拿到雨果奖的长篇科幻，也是最能把“宏大”两个字写到让人后背发凉的一套书。</p>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="books__row" role="button" tabindex="0" aria-expanded="false">
+            <span class="books__no mono">04</span>
+            <span class="books__title">红岩</span>
+            <span class="books__sign" aria-hidden="true"></span>
+          </div>
+          <div class="books__detail">
+            <div class="books__inner">
+              <div class="books__body">
+                <p class="books__author">罗广斌、杨益言<span class="books__country">（中国 · China）</span></p>
+                <p class="books__desc">故事发生在重庆解放前夕的渣滓洞与白公馆。江姐、许云峰、成岗这些名字，是在审讯室和牢房里立起来的。书里的酷刑写得克制，真正让人记住的是人在极限处境下还能守住什么。读完再走一遍山城，看那些老街，感觉会不太一样。</p>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="books__row" role="button" tabindex="0" aria-expanded="false">
+            <span class="books__no mono">05</span>
+            <span class="books__title">我与地坛</span>
+            <span class="books__sign" aria-hidden="true"></span>
+          </div>
+          <div class="books__detail">
+            <div class="books__inner">
+              <div class="books__body">
+                <p class="books__author">史铁生<span class="books__country">（中国 · China）</span></p>
+                <p class="books__desc">二十出头瘫痪之后，史铁生摇着轮椅进了地坛，一进就是十几年。他在这座荒芜的园子里想明白生死，也一遍遍回想母亲悄悄跟在他身后的那些下午。文字很平，几乎没有修辞，但每一句都落在实处——那种把苦难过成日子的能力，比任何励志都更有说服力。</p>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="books__row" role="button" tabindex="0" aria-expanded="false">
+            <span class="books__no mono">06</span>
+            <span class="books__title">平凡的世界（第一部）</span>
+            <span class="books__sign" aria-hidden="true"></span>
+          </div>
+          <div class="books__detail">
+            <div class="books__inner">
+              <div class="books__body">
+                <p class="books__author">路遥<span class="books__country">（中国 · China）</span></p>
+                <p class="books__desc">一九七五年的黄土高原，孙少安在村里撑着一个穷家，孙少平在县城高中就着雨水吃黑高粱馍。路遥写的是最普通的人的劳动、爱情和自尊，写他们怎样在吃不饱的日子里还想着活得体面。厚，慢，但读进去之后会发现，那种笨拙的坚持离我们并不远。</p>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="books__row" role="button" tabindex="0" aria-expanded="false">
+            <span class="books__no mono">07</span>
+            <span class="books__title">射雕英雄传</span>
+            <span class="books__sign" aria-hidden="true"></span>
+          </div>
+          <div class="books__detail">
+            <div class="books__inner">
+              <div class="books__body">
+                <p class="books__author">金庸<span class="books__country">（中国 · China）</span></p>
+                <p class="books__desc">郭靖天资驽钝，学什么都慢，可偏偏是一步一个脚印走得最远的那个人。从蒙古草原到大宋江湖，江南七怪、洪七公、周伯通各教他一手，最后练成的不是最巧的功夫，而是最正的功夫。金庸把“侠”字写得最透的一本书：武功高低是次要的，紧要关头站不站得住才是。</p>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+
+      <div class="subhead reveal" style="--d:.28s">
+        <h3>喜欢的音乐类型</h3>
+      </div>
+
+      <p class="music reveal" style="--d:.32s">
+        喜欢听国语、粤语，偶尔会听韩语、英语的音乐，也会听一些安静的纯音乐。不怎么听节奏很强烈的纯rap……
+      </p>
+
+      <div class="subhead reveal" style="--d:.36s">
+        <h3>在看/看过的动画</h3>
+        <span class="mono">ANIMATION · 未列全</span>
+      </div>
+
+      <ul class="books reveal" style="--d:.4s">
+        <li>
+          <div class="books__row" role="button" tabindex="0" aria-expanded="false">
+            <span class="books__no mono">01</span>
+            <span class="books__title">凡人修仙传</span>
+            <span class="books__sign" aria-hidden="true"></span>
+          </div>
+          <div class="books__detail">
+            <div class="books__inner">
+              <div class="books__body">
+                <p class="books__author">忘语（原著）× 万维猫动画（制作）<span class="books__country">（中国 · China）</span></p>
+                <p class="books__desc">改编自忘语的同名小说。山村里出来的普通少年韩立，资质平平、出身寒微，靠着一份谨慎和一股狠劲，在弱肉强食的修仙界一步一步往上走。3D 长篇动画把“凡人流”的味道做得很扎实：没有天降的奇缘，只有算计、机缘和一场一场的硬仗，越往后越好看。</p>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="books__row" role="button" tabindex="0" aria-expanded="false">
+            <span class="books__no mono">02</span>
+            <span class="books__title">罗小黑战记</span>
+            <span class="books__sign" aria-hidden="true"></span>
+          </div>
+          <div class="books__detail">
+            <div class="books__inner">
+              <div class="books__body">
+                <p class="books__author">MTJJ（木头）<span class="books__country">（中国 · China）</span></p>
+                <p class="books__desc">一只小黑猫妖精流落人间，被人类少女罗小白捡回家，取名罗小黑。画风极简，节奏舒缓，讲的是妖精与人类如何共处的故事。电影版把这个世界观铺得更大，会馆、领域、执行者一一登场，是国产二维动画里少有的完成度，温柔但不幼稚。</p>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="books__row" role="button" tabindex="0" aria-expanded="false">
+            <span class="books__no mono">03</span>
+            <span class="books__title">雾山五行</span>
+            <span class="books__sign" aria-hidden="true"></span>
+          </div>
+          <div class="books__detail">
+            <div class="books__inner">
+              <div class="books__body">
+                <p class="books__author">林魂 × 六道无鱼动画工作室<span class="books__country">（中国 · China）</span></p>
+                <p class="books__desc">守护雾山秩序的五行家族传人闻人翊悬，因私自放走麒麟幼兽引出祸端，牵出一连串恩怨。写意的水墨笔触、高饱和的色彩、刀刀见肉的打斗，作画浓烈到近乎“爆”，每一集的信息密度都很大，是那种一眼就能记住风格的动画。</p>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="books__row" role="button" tabindex="0" aria-expanded="false">
+            <span class="books__no mono">04</span>
+            <span class="books__title">一人之下</span>
+            <span class="books__sign" aria-hidden="true"></span>
+          </div>
+          <div class="books__detail">
+            <div class="books__inner">
+              <div class="books__body">
+                <p class="books__author">米二（原著漫画）<span class="books__country">（中国 · China）</span></p>
+                <p class="books__desc">大学生张楚岚本是藏着掖着过日子的“异人”，随着神秘少女冯宝宝闯入生活，一桩二十年前的旧案被慢慢翻出。把道法与异人江湖装进现代都市，人物一个个又痞又真，是国产漫画改编动画里群像塑造最好的一部。</p>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="books__row" role="button" tabindex="0" aria-expanded="false">
+            <span class="books__no mono">05</span>
+            <span class="books__title">中国奇谭</span>
+            <span class="books__sign" aria-hidden="true"></span>
+          </div>
+          <div class="books__detail">
+            <div class="books__inner">
+              <div class="books__body">
+                <p class="books__author">上海美术电影制片厂<span class="books__country">（中国 · China）</span></p>
+                <p class="books__desc">一组风格各异的动画短篇：从浪浪山里打工的小猪妖，到水墨市井里的鹅鹅鹅，再到月球上的玉兔号。既是向《天书奇谭》那一代上美影的致敬，也把中国动画的另一种可能摆了出来——不求大而全，一集一个世界，一部一种画风。</p>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="books__row" role="button" tabindex="0" aria-expanded="false">
+            <span class="books__no mono">06</span>
+            <span class="books__title">犬夜叉</span>
+            <span class="books__sign" aria-hidden="true"></span>
+          </div>
+          <div class="books__detail">
+            <div class="books__inner">
+              <div class="books__body">
+                <p class="books__author">高桥留美子<span class="books__country">（日本 · Japan）</span></p>
+                <p class="books__desc">初中女学生日暮戈薇跌进食骨井，回到战国时代，和半妖犬夜叉一起踏上收集四魂之玉碎片的旅途。它的好看不只在妖怪和打斗，而在每个人物都有自己的来路与执念。小时候守在电视机前追的一部，现在听到前奏还是会想起。</p>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="books__row" role="button" tabindex="0" aria-expanded="false">
+            <span class="books__no mono">07</span>
+            <span class="books__title">火影忍者</span>
+            <span class="books__sign" aria-hidden="true"></span>
+          </div>
+          <div class="books__detail">
+            <div class="books__inner">
+              <div class="books__body">
+                <p class="books__author">岸本齐史<span class="books__country">（日本 · Japan）</span></p>
+                <p class="books__desc">村子里最捣蛋的吊车尾鸣人，怀揣“成为火影”的梦想一路长大。查克拉、忍术、五影会谈这些设定之外，真正留在记忆里的是“羁绊”二字——鸣人与佐助、师徒与同伴。一部陪着很多人长大的长篇，木叶村的黄昏到现在都记得。</p>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="books__row" role="button" tabindex="0" aria-expanded="false">
+            <span class="books__no mono">08</span>
+            <span class="books__title">鬼灭之刃</span>
+            <span class="books__sign" aria-hidden="true"></span>
+          </div>
+          <div class="books__detail">
+            <div class="books__inner">
+              <div class="books__body">
+                <p class="books__author">吾峠呼世晴<span class="books__country">（日本 · Japan）</span></p>
+                <p class="books__desc">卖炭少年炭治郎全家遭难，妹妹祢豆子变成鬼，他背着妹妹加入鬼杀队，一路斩鬼寻药。作画与配乐都是顶级配置，但最动人的是“人鬼之间还剩多少人性”这一问。剧场版无限列车篇曾创下日本影史票房纪录。</p>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+
+      <div class="subhead reveal" style="--d:.44s">
+        <h3>调色板</h3>
+        <span class="mono">点击色块复制色号</span>
+      </div>
+
+      <div class="palette reveal" style="--d:.48s">
+        <div class="palette__row">
+          <button class="swatch" data-hex="#E3E9DA" type="button">
+            <span class="swatch__chip" style="background:#E3E9DA"></span>
+            <span class="swatch__name">新芽绿</span>
+            <span class="swatch__hex mono">#E3E9DA</span>
+          </button>
+          <button class="swatch" data-hex="#D2DDC6" type="button">
+            <span class="swatch__chip" style="background:#D2DDC6"></span>
+            <span class="swatch__name">嫩叶绿</span>
+            <span class="swatch__hex mono">#D2DDC6</span>
+          </button>
+          <button class="swatch" data-hex="#BDC9AF" type="button">
+            <span class="swatch__chip" style="background:#BDC9AF"></span>
+            <span class="swatch__name">灰绿</span>
+            <span class="swatch__hex mono">#BDC9AF</span>
+          </button>
+          <button class="swatch" data-hex="#B6C0AB" type="button">
+            <span class="swatch__chip" style="background:#B6C0AB"></span>
+            <span class="swatch__name">鼠尾草绿</span>
+            <span class="swatch__hex mono">#B6C0AB</span>
+          </button>
+          <button class="swatch" data-hex="#A2B394" type="button">
+            <span class="swatch__chip" style="background:#A2B394"></span>
+            <span class="swatch__name">石绿</span>
+            <span class="swatch__hex mono">#A2B394</span>
+          </button>
+          <button class="swatch" data-hex="#8FAE9C" type="button">
+            <span class="swatch__chip" style="background:#8FAE9C"></span>
+            <span class="swatch__name">青瓷绿</span>
+            <span class="swatch__hex mono">#8FAE9C</span>
+          </button>
+          <button class="swatch" data-hex="#7B8F6C" type="button">
+            <span class="swatch__chip" style="background:#7B8F6C"></span>
+            <span class="swatch__name">橄榄绿</span>
+            <span class="swatch__hex mono">#7B8F6C</span>
+          </button>
+          <button class="swatch" data-hex="#6E7D63" type="button">
+            <span class="swatch__chip" style="background:#6E7D63"></span>
+            <span class="swatch__name">苔绿</span>
+            <span class="swatch__hex mono">#6E7D63</span>
+          </button>
+          <button class="swatch" data-hex="#4E6146" type="button">
+            <span class="swatch__chip" style="background:#4E6146"></span>
+            <span class="swatch__name">松针绿</span>
+            <span class="swatch__hex mono">#4E6146</span>
+          </button>
+          <button class="swatch" data-hex="#2F4034" type="button">
+            <span class="swatch__chip" style="background:#2F4034"></span>
+            <span class="swatch__name">墨绿</span>
+            <span class="swatch__hex mono">#2F4034</span>
+          </button>
+        </div>
+
+        <div class="palette__row">
+          <button class="swatch" data-hex="#DCE5EA" type="button">
+            <span class="swatch__chip" style="background:#DCE5EA"></span>
+            <span class="swatch__name">天青</span>
+            <span class="swatch__hex mono">#DCE5EA</span>
+          </button>
+          <button class="swatch" data-hex="#C7D5DE" type="button">
+            <span class="swatch__chip" style="background:#C7D5DE"></span>
+            <span class="swatch__name">淡蓝</span>
+            <span class="swatch__hex mono">#C7D5DE</span>
+          </button>
+          <button class="swatch" data-hex="#A8B9C6" type="button">
+            <span class="swatch__chip" style="background:#A8B9C6"></span>
+            <span class="swatch__name">雾蓝</span>
+            <span class="swatch__hex mono">#A8B9C6</span>
+          </button>
+          <button class="swatch" data-hex="#93A7B7" type="button">
+            <span class="swatch__chip" style="background:#93A7B7"></span>
+            <span class="swatch__name">灰蓝</span>
+            <span class="swatch__hex mono">#93A7B7</span>
+          </button>
+          <button class="swatch" data-hex="#7590A6" type="button">
+            <span class="swatch__chip" style="background:#7590A6"></span>
+            <span class="swatch__name">青灰蓝</span>
+            <span class="swatch__hex mono">#7590A6</span>
+          </button>
+          <button class="swatch" data-hex="#5F7C93" type="button">
+            <span class="swatch__chip" style="background:#5F7C93"></span>
+            <span class="swatch__name">石板蓝</span>
+            <span class="swatch__hex mono">#5F7C93</span>
+          </button>
+          <button class="swatch" data-hex="#4A6480" type="button">
+            <span class="swatch__chip" style="background:#4A6480"></span>
+            <span class="swatch__name">钴蓝</span>
+            <span class="swatch__hex mono">#4A6480</span>
+          </button>
+          <button class="swatch" data-hex="#3D5A75" type="button">
+            <span class="swatch__chip" style="background:#3D5A75"></span>
+            <span class="swatch__name">靛蓝</span>
+            <span class="swatch__hex mono">#3D5A75</span>
+          </button>
+          <button class="swatch" data-hex="#2C4059" type="button">
+            <span class="swatch__chip" style="background:#2C4059"></span>
+            <span class="swatch__name">普鲁士蓝</span>
+            <span class="swatch__hex mono">#2C4059</span>
+          </button>
+          <button class="swatch" data-hex="#1F2E44" type="button">
+            <span class="swatch__chip" style="background:#1F2E44"></span>
+            <span class="swatch__name">藏蓝</span>
+            <span class="swatch__hex mono">#1F2E44</span>
+          </button>
+        </div>
+
+        <div class="palette__row">
+          <button class="swatch" data-hex="#ECE3CE" type="button">
+            <span class="swatch__chip" style="background:#ECE3CE"></span>
+            <span class="swatch__name">米白</span>
+            <span class="swatch__hex mono">#ECE3CE</span>
+          </button>
+          <button class="swatch" data-hex="#DED2B4" type="button">
+            <span class="swatch__chip" style="background:#DED2B4"></span>
+            <span class="swatch__name">亚麻</span>
+            <span class="swatch__hex mono">#DED2B4</span>
+          </button>
+          <button class="swatch" data-hex="#D6C7A1" type="button">
+            <span class="swatch__chip" style="background:#D6C7A1"></span>
+            <span class="swatch__name">沙色</span>
+            <span class="swatch__hex mono">#D6C7A1</span>
+          </button>
+          <button class="swatch" data-hex="#CBBB93" type="button">
+            <span class="swatch__chip" style="background:#CBBB93"></span>
+            <span class="swatch__name">麦色</span>
+            <span class="swatch__hex mono">#CBBB93</span>
+          </button>
+          <button class="swatch" data-hex="#BFA97E" type="button">
+            <span class="swatch__chip" style="background:#BFA97E"></span>
+            <span class="swatch__name">卡其</span>
+            <span class="swatch__hex mono">#BFA97E</span>
+          </button>
+          <button class="swatch" data-hex="#AF9A71" type="button">
+            <span class="swatch__chip" style="background:#AF9A71"></span>
+            <span class="swatch__name">驼色</span>
+            <span class="swatch__hex mono">#AF9A71</span>
+          </button>
+          <button class="swatch" data-hex="#9C8B6A" type="button">
+            <span class="swatch__chip" style="background:#9C8B6A"></span>
+            <span class="swatch__name">灰卡其</span>
+            <span class="swatch__hex mono">#9C8B6A</span>
+          </button>
+          <button class="swatch" data-hex="#7E6F4E" type="button">
+            <span class="swatch__chip" style="background:#7E6F4E"></span>
+            <span class="swatch__name">褐土</span>
+            <span class="swatch__hex mono">#7E6F4E</span>
+          </button>
+          <button class="swatch" data-hex="#6E6242" type="button">
+            <span class="swatch__chip" style="background:#6E6242"></span>
+            <span class="swatch__name">橄榄褐</span>
+            <span class="swatch__hex mono">#6E6242</span>
+          </button>
+          <button class="swatch" data-hex="#4B432D" type="button">
+            <span class="swatch__chip" style="background:#4B432D"></span>
+            <span class="swatch__name">深褐</span>
+            <span class="swatch__hex mono">#4B432D</span>
+          </button>
+        </div>
+
+        <div class="palette__row">
+          <button class="swatch" data-hex="#F3E1DA" type="button">
+            <span class="swatch__chip" style="background:#F3E1DA"></span>
+            <span class="swatch__name">藕粉</span>
+            <span class="swatch__hex mono">#F3E1DA</span>
+          </button>
+          <button class="swatch" data-hex="#E8C9BE" type="button">
+            <span class="swatch__chip" style="background:#E8C9BE"></span>
+            <span class="swatch__name">杏粉</span>
+            <span class="swatch__hex mono">#E8C9BE</span>
+          </button>
+          <button class="swatch" data-hex="#DBA998" type="button">
+            <span class="swatch__chip" style="background:#DBA998"></span>
+            <span class="swatch__name">珊瑚</span>
+            <span class="swatch__hex mono">#DBA998</span>
+          </button>
+          <button class="swatch" data-hex="#C98874" type="button">
+            <span class="swatch__chip" style="background:#C98874"></span>
+            <span class="swatch__name">陶土</span>
+            <span class="swatch__hex mono">#C98874</span>
+          </button>
+          <button class="swatch" data-hex="#B46C57" type="button">
+            <span class="swatch__chip" style="background:#B46C57"></span>
+            <span class="swatch__name">砖红</span>
+            <span class="swatch__hex mono">#B46C57</span>
+          </button>
+          <button class="swatch" data-hex="#9E5240" type="button">
+            <span class="swatch__chip" style="background:#9E5240"></span>
+            <span class="swatch__name">铁锈红</span>
+            <span class="swatch__hex mono">#9E5240</span>
+          </button>
+          <button class="swatch" data-hex="#8A4335" type="button">
+            <span class="swatch__chip" style="background:#8A4335"></span>
+            <span class="swatch__name">赭石红</span>
+            <span class="swatch__hex mono">#8A4335</span>
+          </button>
+          <button class="swatch" data-hex="#74332A" type="button">
+            <span class="swatch__chip" style="background:#74332A"></span>
+            <span class="swatch__name">枣红</span>
+            <span class="swatch__hex mono">#74332A</span>
+          </button>
+          <button class="swatch" data-hex="#5A2620" type="button">
+            <span class="swatch__chip" style="background:#5A2620"></span>
+            <span class="swatch__name">酒红</span>
+            <span class="swatch__hex mono">#5A2620</span>
+          </button>
+          <button class="swatch" data-hex="#3D1915" type="button">
+            <span class="swatch__chip" style="background:#3D1915"></span>
+            <span class="swatch__name">暗红</span>
+            <span class="swatch__hex mono">#3D1915</span>
+          </button>
+        </div>
+
+        <div class="palette__row">
+          <button class="swatch" data-hex="#F7F0D5" type="button">
+            <span class="swatch__chip" style="background:#F7F0D5"></span>
+            <span class="swatch__name">象牙</span>
+            <span class="swatch__hex mono">#F7F0D5</span>
+          </button>
+          <button class="swatch" data-hex="#F2E4B6" type="button">
+            <span class="swatch__chip" style="background:#F2E4B6"></span>
+            <span class="swatch__name">米黄</span>
+            <span class="swatch__hex mono">#F2E4B6</span>
+          </button>
+          <button class="swatch" data-hex="#EBD796" type="button">
+            <span class="swatch__chip" style="background:#EBD796"></span>
+            <span class="swatch__name">淡金</span>
+            <span class="swatch__hex mono">#EBD796</span>
+          </button>
+          <button class="swatch" data-hex="#E0C575" type="button">
+            <span class="swatch__chip" style="background:#E0C575"></span>
+            <span class="swatch__name">浅金</span>
+            <span class="swatch__hex mono">#E0C575</span>
+          </button>
+          <button class="swatch" data-hex="#D3B158" type="button">
+            <span class="swatch__chip" style="background:#D3B158"></span>
+            <span class="swatch__name">姜黄</span>
+            <span class="swatch__hex mono">#D3B158</span>
+          </button>
+          <button class="swatch" data-hex="#C39C43" type="button">
+            <span class="swatch__chip" style="background:#C39C43"></span>
+            <span class="swatch__name">琥珀</span>
+            <span class="swatch__hex mono">#C39C43</span>
+          </button>
+          <button class="swatch" data-hex="#A98432" type="button">
+            <span class="swatch__chip" style="background:#A98432"></span>
+            <span class="swatch__name">土黄</span>
+            <span class="swatch__hex mono">#A98432</span>
+          </button>
+          <button class="swatch" data-hex="#8B6A26" type="button">
+            <span class="swatch__chip" style="background:#8B6A26"></span>
+            <span class="swatch__name">赭黄</span>
+            <span class="swatch__hex mono">#8B6A26</span>
+          </button>
+          <button class="swatch" data-hex="#6A4F1C" type="button">
+            <span class="swatch__chip" style="background:#6A4F1C"></span>
+            <span class="swatch__name">暗金</span>
+            <span class="swatch__hex mono">#6A4F1C</span>
+          </button>
+          <button class="swatch" data-hex="#46340F" type="button">
+            <span class="swatch__chip" style="background:#46340F"></span>
+            <span class="swatch__name">褐金</span>
+            <span class="swatch__hex mono">#46340F</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer__inner">
+    <span>© <span id="year">2026</span> 刘松林 Solin</span>
+  </div>
+</footer>
+
+<button class="to-top-fab" id="toTop" aria-label="回到顶部">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+</button>
+
+<script src="assets/main.js"></script>
+</body>
+</html>

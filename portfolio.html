@@ -1,0 +1,622 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>照片墙 — 刘松林 Solin</title>
+    <meta name="description" content="刘松林的照片墙，按年份归档。" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%23111110'/><text x='50' y='68' font-size='52' font-family='Georgia,serif' fill='%23f7f6f4' text-anchor='middle'>S</text></svg>"
+    />
+    <script>
+      (function () {
+        try {
+          // 首帧即隐藏原生光标，避免切页时闪一下白色箭头
+          if (
+            window.matchMedia("(pointer: fine)").matches &&
+            !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ) {
+            document.documentElement.classList.add("cursor-pending");
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="assets/style.css" />
+  </head>
+  <body class="is-entering">
+    <div class="veil" aria-hidden="true"></div>
+
+    <!-- nav:start · 由 partials/nav.html 生成，改完跑 python tools/sync_nav.py -->
+<header class="site-header">
+  <a class="brand" href="index.html">
+    <span class="brand__mark">S</span>
+    <span class="brand__text">刘松林<em>Solin</em></span>
+  </a>
+
+  <nav class="nav" id="nav">
+    <a href="index.html" class="nav__link">首页</a>
+    <a href="portfolio.html" class="nav__link is-active">照片墙</a>
+    <a href="about.html" class="nav__link">关于我</a>
+  </nav>
+
+  <div class="header-actions">
+    <button class="menu-btn" id="menuBtn" aria-label="打开菜单" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
+<!-- nav:end -->
+
+    <main id="top" class="subpage">
+      <section class="section portfolio" id="portfolio">
+        <div class="wrap">
+          <p class="portfolio__intro reveal">
+            岁月流逝，人聚人散，唯有日月山川依旧。
+          </p>
+
+          <!--
+        每张照片的大图信息都在 <figure class="shot"> 上，直接改属性即可：
+          data-exif   设备 · 焦距 · 光圈 · 快门 · ISO · 拍摄日期（缺 EXIF 的写「exif已丢失」）
+          data-ar     照片宽高比（按原图实际比例填，大图查看时用）
+        照片按拍摄日期分组排序：文件名前 8 位即 YYYYMMDD；由 tools/build_wall.py 自动生成，不要手改
+      -->
+          <div class="gallery-wrap">
+            <div class="year-group">
+              <div class="year-label">2026</div>
+              <div class="pf-grid">
+                <figure
+                  class="shot reveal"
+                  tabindex="0"
+                  role="button"
+                  style="--ar: 0.75"
+                  data-ar="0.75"
+                  data-exif="OPPO Find X9 · 73mm · f/2.6 · 1/15s · ISO4000 · 2026-10-24"
+                  data-src="assets/portfolio/large/exif_exist/20261024_01.jpg"
+                >
+                  <div
+                    class="shot__img"
+                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20261024_01.jpg');"
+                  ></div>
+                </figure>
+                <figure
+                  class="shot reveal"
+                  tabindex="0"
+                  role="button"
+                  style="--ar: 0.75"
+                  data-ar="0.75"
+                  data-exif="OPPO Find X9 · 73mm · f/2.6 · 1/25s · ISO1000 · 2026-10-07"
+                  data-src="assets/portfolio/large/exif_exist/20261007_01.jpg"
+                >
+                  <div
+                    class="shot__img"
+                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20261007_01.jpg');"
+                  ></div>
+                </figure>
+                <figure
+                  class="shot reveal"
+                  tabindex="0"
+                  role="button"
+                  style="--ar: 0.451"
+                  data-ar="0.451"
+                  data-exif="vivo X90 Pro+ · 77mm · f/1.6 · 1/2817s · ISO50 · 2026-08-09"
+                  data-src="assets/portfolio/large/exif_exist/20260809_01.jpg"
+                >
+                  <div
+                    class="shot__img"
+                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20260809_01.jpg');"
+                  ></div>
+                </figure>
+                <figure
+                  class="shot reveal"
+                  tabindex="0"
+                  role="button"
+                  style="--ar: 0.75"
+                  data-ar="0.75"
+                  data-exif="vivo X90 Pro+ · 50mm · f/1.6 · 1/728s · ISO50 · 2026-07-05"
+                  data-src="assets/portfolio/large/exif_exist/20260705_01.jpg"
+                >
+                  <div
+                    class="shot__img"
+                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20260705_01.jpg');"
+                  ></div>
+                </figure>
+                <figure
+                  class="shot reveal"
+                  tabindex="0"
+                  role="button"
+                  style="--ar: 1.333"
+                  data-ar="1.333"
+                  data-exif="vivo X90 Pro+ · 257mm · f/3.5 · 1/500s · ISO86 · 2026-02-20"
+                  data-src="assets/portfolio/large/exif_exist/20260220_01.jpg"
+                >
+                  <div
+                    class="shot__img"
+                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20260220_01.jpg');"
+                  ></div>
+                </figure>
+                <div class="pf-filler" aria-hidden="true"></div>
+              </div>
+            </div>
+
+            <div class="year-group">
+              <div class="year-label">2025</div>
+              <div class="pf-grid">
+                <figure
+                  class="shot reveal"
+                  tabindex="0"
+                  role="button"
+                  style="--ar: 0.75"
+                  data-ar="0.75"
+                  data-exif="vivo X90 Pro+ · 257mm · f/3.5 · 1/100s · ISO197 · 2025-07-08"
+                  data-src="assets/portfolio/large/exif_exist/20250708_01.jpg"
+                >
+                  <div
+                    class="shot__img"
+                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20250708_01.jpg');"
+                  ></div>
+                </figure>
+                <figure
+                  class="shot reveal"
+                  tabindex="0"
+                  role="button"
+                  style="--ar: 0.61"
+                  data-ar="0.61"
+                  data-exif="vivo X90 Pro+ · 23mm · f/1.75 · 1/2710s · ISO50 · 2025-02-03"
+                  data-src="assets/portfolio/large/exif_exist/20250203_02.jpg"
+                >
+                  <div
+                    class="shot__img"
+                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20250203_02.jpg');"
+                  ></div>
+                </figure>
+                <figure
+                  class="shot reveal"
+                  tabindex="0"
+                  role="button"
+                  style="--ar: 1.333"
+                  data-ar="1.333"
+                  data-exif="vivo X90 Pro+ · 118mm · f/3.5 · 1/362s · ISO50 · 2025-02-03"
+                  data-src="assets/portfolio/large/exif_exist/20250203_01.jpg"
+                >
+                  <div
+                    class="shot__img"
+                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20250203_01.jpg');"
+                  ></div>
+                </figure>
+                <figure
+                  class="shot reveal"
+                  tabindex="0"
+                  role="button"
+                  style="--ar: 1.347"
+                  data-ar="1.347"
+                  data-exif="vivo X90 Pro+ · 90mm · f/3.5 · 1/919s · ISO138 · 2025-01-11"
+                  data-src="assets/portfolio/large/exif_exist/20250111_07.jpg"
+                >
+                  <div
+                    class="shot__img"
+                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20250111_07.jpg');"
+                  ></div>
+                </figure>
+                <figure
+                  class="shot reveal"
+                  tabindex="0"
+                  role="button"
+                  style="--ar: 0.75"
+                  data-ar="0.75"
+                  data-exif="vivo X90 Pro+ · 342mm · f/3.5 · 1/500s · ISO70 · 2025-01-11"
+                  data-src="assets/portfolio/large/exif_exist/20250111_06.jpg"
+                >
+                  <div
+                    class="shot__img"
+                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20250111_06.jpg');"
+                  ></div>
+                </figure>
+                <figure
+                  class="shot reveal"
+                  tabindex="0"
+                  role="button"
+                  style="--ar: 1.352"
+                  data-ar="1.352"
+                  data-exif="vivo X90 Pro+ · 90mm · f/3.5 · 1/1080s · ISO77 · 2025-01-11"
+                  data-src="assets/portfolio/large/exif_exist/20250111_05.jpg"
+                >
+                  <div
+                    class="shot__img"
+                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20250111_05.jpg');"
+                  ></div>
+                </figure>
+                <figure
+                  class="shot reveal"
+                  tabindex="0"
+                  role="button"
+                  style="--ar: 1.343"
+                  data-ar="1.343"
+                  data-exif="vivo X90 Pro+ · 90mm · f/3.5 · 1/1099s · ISO59 · 2025-01-11"
+                  data-src="assets/portfolio/large/exif_exist/20250111_04.jpg"
+                >
+                  <div
+                    class="shot__img"
+                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20250111_04.jpg');"
+                  ></div>
+                </figure>
+                <figure
+                  class="shot reveal"
+                  tabindex="0"
+                  role="button"
+                  style="--ar: 1.335"
+                  data-ar="1.335"
+                  data-exif="vivo X90 Pro+ · 50mm · f/1.6 · 1/2000s · ISO157 · 2025-01-11"
+                  data-src="assets/portfolio/large/exif_exist/20250111_03.jpg"
+                >
+                  <div
+                    class="shot__img"
+                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20250111_03.jpg');"
+                  ></div>
+                </figure>
+                <figure
+                  class="shot reveal"
+                  tabindex="0"
+                  role="button"
+                  style="--ar: 1.339"
+                  data-ar="1.339"
+                  data-exif="vivo X90 Pro+ · 50mm · f/1.6 · 1/1779s · ISO87 · 2025-01-11"
+                  data-src="assets/portfolio/large/exif_exist/20250111_02.jpg"
+                >
+                  <div
+                    class="shot__img"
+                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20250111_02.jpg');"
+                  ></div>
+                </figure>
+                <figure
+                  class="shot reveal"
+                  tabindex="0"
+                  role="button"
+                  style="--ar: 0.745"
+                  data-ar="0.745"
+                  data-exif="vivo X90 Pro+ · 257mm · f/3.5 · 1/221s · ISO100 · 2025-01-11"
+                  data-src="assets/portfolio/large/exif_exist/20250111_01.jpg"
+                >
+                  <div
+                    class="shot__img"
+                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20250111_01.jpg');"
+                  ></div>
+                </figure>
+                <div class="pf-filler" aria-hidden="true"></div>
+              </div>
+            </div>
+
+            <div class="year-group">
+              <div class="year-label">2024</div>
+              <div class="pf-grid">
+                <figure
+                  class="shot reveal"
+                  tabindex="0"
+                  role="button"
+                  style="--ar: 1.333"
+                  data-ar="1.333"
+                  data-exif="vivo X90 Pro+ · 23mm · f/1.75 · 1/60s · ISO10000 · 2024-12-31"
+                  data-src="assets/portfolio/large/exif_exist/20241231_01.jpg"
+                >
+                  <div
+                    class="shot__img"
+                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20241231_01.jpg');"
+                  ></div>
+                </figure>
+                <figure
+                  class="shot reveal"
+                  tabindex="0"
+                  role="button"
+                  style="--ar: 1.778"
+                  data-ar="1.778"
+                  data-exif="vivo X90 Pro+ · 23mm · f/1.75 · 1/17s · ISO2357 · 2024-10-02"
+                  data-src="assets/portfolio/large/exif_exist/20241002_02.jpg"
+                >
+                  <div
+                    class="shot__img"
+                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20241002_02.jpg');"
+                  ></div>
+                </figure>
+                <figure
+                  class="shot reveal"
+                  tabindex="0"
+                  role="button"
+                  style="--ar: 1.778"
+                  data-ar="1.778"
+                  data-exif="vivo X90 Pro+ · 257mm · f/3.5 · 1/114s · ISO69 · 2024-10-02"
+                  data-src="assets/portfolio/large/exif_exist/20241002_01.jpg"
+                >
+                  <div
+                    class="shot__img"
+                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20241002_01.jpg');"
+                  ></div>
+                </figure>
+                <div class="pf-filler" aria-hidden="true"></div>
+              </div>
+            </div>
+
+            <div class="year-group">
+              <div class="year-label">2023</div>
+              <div class="pf-grid">
+                <figure
+                  class="shot reveal"
+                  tabindex="0"
+                  role="button"
+                  style="--ar: 1.333"
+                  data-ar="1.333"
+                  data-exif="HUAWEI P50 Pro · 27mm · f/1.8 · 1/603s · ISO50 · 2023-09-18"
+                  data-src="assets/portfolio/large/exif_exist/20230918_01.jpg"
+                >
+                  <div
+                    class="shot__img"
+                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20230918_01.jpg');"
+                  ></div>
+                </figure>
+                <figure
+                  class="shot reveal"
+                  tabindex="0"
+                  role="button"
+                  style="--ar: 1.5"
+                  data-ar="1.5"
+                  data-exif="exif已丢失"
+                  data-src="assets/portfolio/large/exif_lost/20230806_03.jpg"
+                >
+                  <div
+                    class="shot__img"
+                    style="background-image: url('assets/portfolio/thumbs/exif_lost/20230806_03.jpg');"
+                  ></div>
+                </figure>
+                <figure
+                  class="shot reveal"
+                  tabindex="0"
+                  role="button"
+                  style="--ar: 1.5"
+                  data-ar="1.5"
+                  data-exif="SONY α6000 · 202mm · f/13 · 1/100s · ISO800 · 2023-08-06"
+                  data-src="assets/portfolio/large/exif_exist/20230806_02.jpg"
+                >
+                  <div
+                    class="shot__img"
+                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20230806_02.jpg');"
+                  ></div>
+                </figure>
+                <figure
+                  class="shot reveal"
+                  tabindex="0"
+                  role="button"
+                  style="--ar: 0.667"
+                  data-ar="0.667"
+                  data-exif="exif已丢失"
+                  data-src="assets/portfolio/large/exif_lost/20230806_02.jpg"
+                >
+                  <div
+                    class="shot__img"
+                    style="background-image: url('assets/portfolio/thumbs/exif_lost/20230806_02.jpg');"
+                  ></div>
+                </figure>
+                <figure
+                  class="shot reveal"
+                  tabindex="0"
+                  role="button"
+                  style="--ar: 1.5"
+                  data-ar="1.5"
+                  data-exif="SONY α6000 · 202mm · f/20 · 1/60s · ISO100 · 2023-08-06"
+                  data-src="assets/portfolio/large/exif_exist/20230806_01.jpg"
+                >
+                  <div
+                    class="shot__img"
+                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20230806_01.jpg');"
+                  ></div>
+                </figure>
+                <figure
+                  class="shot reveal"
+                  tabindex="0"
+                  role="button"
+                  style="--ar: 1.5"
+                  data-ar="1.5"
+                  data-exif="exif已丢失"
+                  data-src="assets/portfolio/large/exif_lost/20230805_03.jpg"
+                >
+                  <div
+                    class="shot__img"
+                    style="background-image: url('assets/portfolio/thumbs/exif_lost/20230805_03.jpg');"
+                  ></div>
+                </figure>
+                <figure
+                  class="shot reveal"
+                  tabindex="0"
+                  role="button"
+                  style="--ar: 0.667"
+                  data-ar="0.667"
+                  data-exif="exif已丢失"
+                  data-src="assets/portfolio/large/exif_lost/20230805_02.jpg"
+                >
+                  <div
+                    class="shot__img"
+                    style="background-image: url('assets/portfolio/thumbs/exif_lost/20230805_02.jpg');"
+                  ></div>
+                </figure>
+                <figure
+                  class="shot reveal"
+                  tabindex="0"
+                  role="button"
+                  style="--ar: 0.667"
+                  data-ar="0.667"
+                  data-exif="exif已丢失"
+                  data-src="assets/portfolio/large/exif_lost/20230723_01.jpg"
+                >
+                  <div
+                    class="shot__img"
+                    style="background-image: url('assets/portfolio/thumbs/exif_lost/20230723_01.jpg');"
+                  ></div>
+                </figure>
+                <figure
+                  class="shot reveal"
+                  tabindex="0"
+                  role="button"
+                  style="--ar: 1.413"
+                  data-ar="1.413"
+                  data-exif="exif已丢失"
+                  data-src="assets/portfolio/large/exif_lost/20230414_01.jpg"
+                >
+                  <div
+                    class="shot__img"
+                    style="background-image: url('assets/portfolio/thumbs/exif_lost/20230414_01.jpg');"
+                  ></div>
+                </figure>
+                <figure
+                  class="shot reveal"
+                  tabindex="0"
+                  role="button"
+                  style="--ar: 0.749"
+                  data-ar="0.749"
+                  data-exif="exif已丢失"
+                  data-src="assets/portfolio/large/exif_lost/20230412_01.jpg"
+                >
+                  <div
+                    class="shot__img"
+                    style="background-image: url('assets/portfolio/thumbs/exif_lost/20230412_01.jpg');"
+                  ></div>
+                </figure>
+                <figure
+                  class="shot reveal"
+                  tabindex="0"
+                  role="button"
+                  style="--ar: 0.75"
+                  data-ar="0.75"
+                  data-exif="HUAWEI P50 Pro · 95mm · f/3.5 · 1/24s · ISO500 · 2023-04-11"
+                  data-src="assets/portfolio/large/exif_exist/20230411_02.jpg"
+                >
+                  <div
+                    class="shot__img"
+                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20230411_02.jpg');"
+                  ></div>
+                </figure>
+                <figure
+                  class="shot reveal"
+                  tabindex="0"
+                  role="button"
+                  style="--ar: 0.751"
+                  data-ar="0.751"
+                  data-exif="exif已丢失"
+                  data-src="assets/portfolio/large/exif_lost/20230411_01.jpg"
+                >
+                  <div
+                    class="shot__img"
+                    style="background-image: url('assets/portfolio/thumbs/exif_lost/20230411_01.jpg');"
+                  ></div>
+                </figure>
+                <div class="pf-filler" aria-hidden="true"></div>
+              </div>
+            </div>
+
+            <div class="year-group">
+              <div class="year-label">2022</div>
+              <div class="pf-grid">
+                <figure
+                  class="shot reveal"
+                  tabindex="0"
+                  role="button"
+                  style="--ar: 0.792"
+                  data-ar="0.792"
+                  data-exif="HUAWEI P50 Pro · 27mm · f/1.8 · 1/1531s · ISO50 · 2022-10-25"
+                  data-src="assets/portfolio/large/exif_exist/20221025_01.jpg"
+                >
+                  <div
+                    class="shot__img"
+                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20221025_01.jpg');"
+                  ></div>
+                </figure>
+                <div class="pf-filler" aria-hidden="true"></div>
+              </div>
+            </div>
+
+            <p class="pf-note mono">所有焦距均为 35mm 等效焦距</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer__inner">
+        <span>© <span id="year">2026</span> 刘松林 Solin</span>
+      </div>
+    </footer>
+
+    <button class="to-top-fab" id="toTop" aria-label="回到顶部">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+      >
+        <path d="M12 19V5M6 11l6-6 6 6" />
+      </svg>
+    </button>
+
+    <!-- 灯箱 -->
+    <div
+      class="lightbox"
+      id="lightbox"
+      aria-hidden="true"
+      role="dialog"
+      aria-modal="true"
+      aria-label="作品预览"
+    >
+      <button class="lightbox__close" id="lbClose" aria-label="关闭">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.4"
+        >
+          <path d="M6 6l12 12M18 6 6 18" />
+        </svg>
+      </button>
+      <button class="lb-nav lb-nav--prev" id="lbPrev" aria-label="上一张">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+          <path d="M15 5l-7 7 7 7" />
+        </svg>
+      </button>
+      <button class="lb-nav lb-nav--next" id="lbNext" aria-label="下一张">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+          <path d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+
+      <figure class="lb-stage">
+        <div class="lb-viewport" id="lbViewport">
+          <div class="lb-photo" id="lbPhoto"></div>
+        </div>
+        <figcaption class="lb-meta">
+          <span class="lb-exif"
+            ><img
+              class="lb-exif__icon"
+              src="assets/icons/shutter.png"
+              alt=""
+              draggable="false"
+            /><span id="lbExif"></span
+          ></span>
+        </figcaption>
+        <div class="lb-zoom" aria-label="缩放">
+          <div class="lb-zoom__bar" id="lbBar">
+            <div class="lb-zoom__thumb" id="lbThumb"></div>
+          </div>
+          <span class="lb-zoom__val" id="lbZoomVal">100%</span>
+        </div>
+      </figure>
+    </div>
+
+    <script src="assets/main.js"></script>
+  </body>
+</html>

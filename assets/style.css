@@ -294,6 +294,19 @@ body.menu-open .site-header {
 }
 .reveal.is-in { opacity: 1; transform: none; }
 
+/* 门页名字专用字体：只含「刘松林 / Solin」这几个字形（各 1～2 KB），
+   保证手机没有宋体/黑体时字形也一致。改名就要重新生成这两个 woff2。 */
+@font-face {
+  font-family: "Solin Serif";
+  src: url("fonts/serif-name.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Solin Sans";
+  src: url("fonts/sans-name.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+
 /* ---------- 07 Intro：门页 + 星流穿越 ---------- */
 .intro {
   position: fixed; inset: 0; z-index: 600;
@@ -326,14 +339,14 @@ body.menu-open .site-header {
 }
 /* 中文名在上：宋体，尺寸沿用原来的门页字号 */
 .intro__cn {
-  font-family: "Songti SC", "宋体", "SimSun", "Source Han Serif SC", "Noto Serif SC", Georgia, serif;
+  font-family: "Solin Serif", "Songti SC", "宋体", "SimSun", "Source Han Serif SC", "Noto Serif SC", Georgia, serif;
   font-size: clamp(1.9rem, 4.4vw, 3.2rem);
   letter-spacing: .16em; text-indent: .16em;
   line-height: 1.05;
 }
 /* 英文名在下：黑体，约中文的 1/4，字距拉开 */
 .intro__en {
-  font-family: "Heiti SC", "黑体", "SimHei", "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-family: "Solin Sans", "Heiti SC", "黑体", "SimHei", "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   font-size: clamp(.48rem, 1.1vw, .8rem);
   letter-spacing: .32em; text-indent: .32em;
   color: rgba(242, 236, 220, .78);

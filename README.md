@@ -2,6 +2,13 @@
 
 纯静态站点（3 个页面 + assets），无框架、无构建步骤。线上由 Cloudflare Pages 托管，源码放在 GitHub。
 
+## 线上地址
+
+- 站点：https://photo-site-6i8.pages.dev
+- 仓库：https://github.com/Solin825/photo-site
+- 洁净网址：`/portfolio`、`/about`（访问 `/portfolio.html` 会 308 跳到 `/portfolio`，属 Pages 正常行为）
+- 改动 push 到 `main` 后，Cloudflare Pages 自动重新部署
+
 ## 重要：这里只是发布产物
 
 | 目录 | 作用 |

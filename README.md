@@ -177,6 +177,11 @@ git push
 
 ## 注意事项
 
+- **GitHub 推送需要代理**。本机系统代理是 `127.0.0.1:12450`，git 已配置全局规则，只对 github.com 生效：
+  ```
+  git config --global http.https://github.com.proxy http://127.0.0.1:12450
+  ```
+  代理软件换端口后要重配一次，否则 `git push` 会报 `Recv failure: Connection was reset`（直连 GitHub 就是这样被重置的，与仓库无关）。
 - **母库 `E:\PhotoArchive` 只读**，脚本不写入、不改名任何原图。
 - `portfolio.html` 的 gallery 区块由脚本生成，手改会被下次运行覆盖。
 - 三页 HTML 换行符统一 LF；`sync_nav.py` 固定写 LF。

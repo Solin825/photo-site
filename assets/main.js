@@ -81,14 +81,14 @@
     nav?.classList.remove('is-open');
     menuBtn?.setAttribute('aria-expanded', 'false');
     body.classList.remove('menu-open');
-    body.style.overflow = '';
   };
 
   menuBtn?.addEventListener('click', () => {
     const open = nav?.classList.toggle('is-open');
     menuBtn.setAttribute('aria-expanded', String(!!open));
     body.classList.toggle('menu-open', !!open);
-    body.style.overflow = open ? 'hidden' : '';
+    /* 不再用 body.style.overflow 锁滚动：那会让整篇文档重排一次，
+       页面滑到深处时展开菜单就会卡一下。全屏菜单自己吃手势（见 CSS 的 touch-action） */
   });
 
   document.addEventListener('keydown', (e) => {
@@ -185,56 +185,65 @@ float fbm(vec2 p, float oct){
   return v;
 }
 
-/* 一条斜向飘带。
-   中心线的弯曲全部来自"随时间漂移的噪声"，而不是正弦——
-   正弦会在某些相位让整段带子局部变成直线（旧版放久了就是这个毛病），
-   噪声域一直在流动，形状永远不规则，也不会自己退化成一根面条。 */
-float ribbon(vec2 p, float slope, float base, float thick, float spd, float seed, float oct, out float across){
-  float t = u_time * spd;
+/* 一条极光帘幕。
+   参考真实极光照片（储卫民）：横向铺开、带弧势（沿大圆走，天然是弧不是直线），
+   下缘亮而窄、上沿散成长辉光，帘幕里是一束束竖直的光帘 + 上浮的竖向射线。
+   所有起伏都来自随时间漂移的噪声，不用正弦（正弦会在拐点退化成直线）。 */
+float curtain(vec2 p, float base, float bow, float thick, float drift, float seed, float oct, out float across){
+  float t = u_time * drift;
+  /* 每条帘幕自己的漂移方向与速度：避免整片天空朝同一个方向平移 */
+  float sg = fract(seed * 0.37) > 0.5 ? 1.0 : -1.0;
 
-  /* 中心线：斜线 + 三层不同尺度的漂移噪声（长波游走 / 中波起伏 / 细抖动）。
-     长波频率压得比较低，带子的斜向走势才不会被噪声打散成一片雾 */
-  float cy = base + slope * p.x;
-  cy += 0.30 * (fbm(vec2(p.x * 0.55 + seed * 4.7 - t * 0.42, seed * 2.3 + t * 0.07), oct) - 0.5);
-  cy += 0.13 * (fbm(vec2(p.x * 1.75 - seed * 6.1 + t * 0.80, seed * 3.9 - t * 0.11), oct) - 0.5);
-  cy += 0.045 * (noise(vec2(p.x * 5.6 + seed * 8.3 - t * 1.10, seed * 9.6)) - 0.5);
+  /* 弧势：抛物线（弧顶在画面中间、两端下垂）叠一层很慢的长波起伏 */
+  float warp = fbm(vec2(p.x * 0.38 + seed * 2.7 - sg * t * 0.10, seed * 1.9 + sg * t * 0.05), oct) - 0.5;
+  float cy = base + bow * p.x * p.x + warp * 0.18;
+
   float d = p.y - cy;
+  float above = max(d, 0.0);
+  float below = max(-d, 0.0);
 
-  /* 宽度：低频噪声决定"哪里摊开成光幕、哪里收窄"，
-     最窄也保持 0.55 倍厚度，不会缩成一根细线 */
-  float wr = fbm(vec2(p.x * 0.62 + t * 0.20, seed * 7.7), oct);
-  float th = thick * (0.55 + 1.45 * wr);
+  /* 厚度沿弧长度变化：有的地方摊成整片光幕，有的地方收成一道薄幕 */
+  float wr = fbm(vec2(p.x * 0.50 + sg * t * 0.07, seed * 6.1), oct);
+  float th = thick * (0.55 + 1.30 * wr);
+  float tn = max(th, 1e-4);
 
-  /* 帘褶：沿带方向的成束明暗，束宽与位置都由噪声决定（不再是均匀条纹） */
-  float fold = fbm(vec2(p.x * 13.0 - t * 1.20, seed * 12.3), oct);
+  /* 下缘收得紧、上沿略微散开——真实帘幕的截面就是这种不对称 */
+  float qd = (below / tn) * (below / tn);
+  float qu = (above / tn) * (above / tn);
+  float coreD = exp(-qd * 3.40);
+  float coreU = exp(-qu * 2.10);
+  float uu = above / (tn * 1.9);
+  float haloU = exp(-uu * uu);
 
-  /* 核心 + 上侧辉光 */
-  float x = d / th;
-  float core = exp(-x * x * 1.70);
-  float hx = max(d, 0.0) / (th * 1.9);
-  float halo = exp(-hx * hx) * 0.14;
-  float v = core + halo;
+  /* 竖向光帘：整束竖直、宽窄不一，沿弧方向缓慢流过（方向随种子不同）。
+     两频噪声相乘：束宽忽宽忽窄，不会是一排等距的条纹 */
+  float b1 = fbm(vec2(p.x * 11.0 + seed * 9.0 - sg * t * 0.28, seed * 4.3), oct);
+  float b2 = noise(vec2(p.x * 29.0 + seed * 15.0 + sg * t * 0.20, seed * 7.1));
+  /* gate：一条帘幕里只有若干段明显分束，其余段落糊成整片光——避免一排等距条纹 */
+  float gate = 0.30 + 0.70 * fbm(vec2(p.x * 3.10 + sg * t * 0.10, seed * 10.5), oct);
+  float beams = gate * (0.15 + 0.85 * pow(b1 * (0.55 + 0.45 * b2), 1.6));
 
-  /* 内侧亮丝：帘幕正中更锐的一条，结构不至于糊成一团光晕 */
-  v += exp(-x * x * 3.40) * 0.30 * (0.30 + 0.70 * fold);
+  /* 上浮的竖向射线：位置随机、速度各不相同，越往上越淡 */
+  float rays = pow(noise(vec2(p.x * 33.0 + seed * 12.0 - sg * t * 0.14, seed * 2.5 - sg * t * 0.16)), 2.0);
+  float rr = above / (tn * 3.0);
+  float rayFade = exp(-rr * rr);
 
-  v *= 0.16 + 0.84 * fold;
+  /* 亮的部分只在帘幕本体里（按竖向光帘分束），外围辉光保持平滑、不再竖着分条 */
+  float v = (coreU * 0.34 + coreD * 0.86) * beams + haloU * 0.10 + rayFade * 0.16 * rays;
 
-  /* 竖向光柱：极光下缘特有的丝状射线，位置随机、缓慢上移 */
-  v += exp(-x * x * 0.35) * 0.22
-     * pow(noise(vec2(p.x * 26.0 + seed * 3.3, seed * 5.1 + t * 0.35)), 2.0);
+  /* 缓慢呼吸 + 中尺度断带：整条帘幕时强时弱，某些段落会明显变暗、断开 */
+  float breath = 0.30 + 0.70 * fbm(vec2(p.x * 0.35 + sg * t * 0.15, seed * 3.3), oct);
+  float patch = 0.45 + 0.55 * fbm(vec2(p.x * 2.60 - sg * t * 0.25, seed * 8.9), oct);
+  v *= breath * patch;
 
-  /* 呼吸：整条带时强时弱，偶尔几乎隐没 */
-  v *= 0.20 + 0.80 * noise(vec2(p.x * 0.42 + t * 0.20, seed * 2.9));
-
-  across = clamp(d / (th * 2.2) + 0.45, 0.0, 1.0);
+  across = clamp((d / tn) * 0.5 + 0.5, 0.0, 1.0);
   return v;
 }
 
-/* 带内配色：下缘绿 → 中部青 → 上缘泛紫（真实极光的垂直色阶） */
+/* 带内配色：下缘绿 → 中部青 → 上缘极淡的紫（真实极光的垂直色阶） */
 vec3 bandColor(float across){
-  vec3 c = mix(vec3(0.22, 0.95, 0.58), vec3(0.16, 0.74, 0.82), smoothstep(0.30, 0.72, across));
-  c = mix(c, vec3(0.42, 0.36, 0.82), smoothstep(0.74, 1.0, across) * 0.65);
+  vec3 c = mix(vec3(0.20, 0.92, 0.54), vec3(0.14, 0.68, 0.76), smoothstep(0.34, 0.78, across));
+  c = mix(c, vec3(0.40, 0.34, 0.78), smoothstep(0.82, 1.0, across) * 0.55);
   return c;
 }
 
@@ -282,22 +291,22 @@ void main(){
   stars *= (1.0 - smoothstep(0.42, 0.94, g)) * 0.85;
   sky += vec3(0.84, 0.91, 1.0) * stars;
 
-  /* ---------- 极光：三条主飘带 + 一条很淡的远带，斜度、速度、种子互不相同 ---------- */
+  /* ---------- 极光：一条主帘幕 + 一条更高的淡帘 + 下方一片弥散光，弧势各不相同 ---------- */
   float across;
   vec3 aur = vec3(0.0);
   float v;
 
-  v = ribbon(rp, 0.40, 0.02, 0.055, 0.052, 1.7, u_oct, across);
-  aur += bandColor(across) * v * 0.52;
+  v = curtain(rp, 0.20, -0.28, 0.030, 0.30, 2.3, u_oct, across);
+  aur += bandColor(across) * v * 0.95;
 
-  v = ribbon(rp, 0.58, -0.20, 0.045, 0.038, 4.3, u_oct, across);
-  aur += bandColor(across) * v * 0.36;
-
-  v = ribbon(rp, 0.26, 0.24, 0.040, 0.068, 8.1, u_oct, across);
+  v = curtain(rp, 0.40, -0.10, 0.022, -0.22, 6.1, u_oct, across);
   aur += bandColor(across) * v * 0.28;
 
-  v = ribbon(rp, 0.48, -0.46, 0.034, 0.030, 13.4, u_oct, across);
-  aur += bandColor(across) * v * 0.18;
+  v = curtain(rp, -0.18, 0.22, 0.045, 0.16, 11.7, u_oct, across);
+  aur += bandColor(across) * v * 0.08;
+
+  /* 极光主要铺在天顶到中天，越靠近地平线越暗——天空下半部留给夜色 */
+  aur *= smoothstep(-0.34, 0.02, p.y);
 
   /* ---------- 雪地：地平线以下一片极淡的雪光，没有任何山影轮廓 ---------- */
   float ground = smoothstep(0.90, 1.02, g);
@@ -395,8 +404,8 @@ void main(){
         let last = 0;
         const loop = (ts) => {
           if (!t0) t0 = ts;
-          // 浅色主题下画布被 CSS 隐藏，跳过绘制省电
-          if (cv.offsetWidth > 0 && ts - last > 33) {
+          // 浅色主题下画布被 CSS 隐藏、或全屏菜单盖住时，跳过绘制省电（也避免和菜单动画抢 GPU）
+          if (cv.offsetWidth > 0 && !body.classList.contains('menu-open') && ts - last > 33) {
             last = ts;
             draw((ts - t0) / 1000);
           }

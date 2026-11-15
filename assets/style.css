@@ -1132,6 +1132,8 @@ body.intro-playing { overflow: hidden; }
   transition: transform .4s var(--ease), border-color .3s, color .3s, opacity .35s, visibility .35s;
 }
 .to-top-fab.is-visible { opacity: 1; visibility: visible; pointer-events: auto; }
+/* 全屏菜单展开时藏起来，免得浮在菜单里 */
+body.menu-open .to-top-fab { opacity: 0; visibility: hidden; pointer-events: none; }
 
 .to-top-fab svg { width: 16px; height: 16px; }
 .to-top-fab:hover { border-color: var(--ink); color: var(--ink); transform: translateY(-3px); }
@@ -1208,12 +1210,19 @@ body.is-leaving .site-footer {
     gap: 0;
     padding: 0 var(--pad);
     background: var(--bg);
-    transform: translateY(-100%);
+    transform: translateY(-100%) translateZ(0);
     opacity: 0; visibility: hidden;
     transition: transform .65s var(--ease), opacity .45s var(--ease), visibility .45s;
     z-index: 90;
+    /* 提前提升为合成层：下滑时只做位移动画，不必重新栅格化整页背景
+       （滑到深处再展开会卡一下，就是这一步省掉的） */
+    will-change: transform;
+    backface-visibility: hidden;
+    /* 面板自身吃掉触摸手势，页面在底下不会被带着一起滚 */
+    touch-action: none;
+    overscroll-behavior: contain;
   }
-  .nav.is-open { transform: translateY(0); opacity: 1; visibility: visible; }
+  .nav.is-open { transform: translateY(0) translateZ(0); opacity: 1; visibility: visible; }
   /* 手机端每一项整行都能点（文字右侧的空白也算命中区） */
   .nav__link {
     display: flex; align-items: center;

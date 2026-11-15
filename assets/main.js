@@ -156,6 +156,7 @@ precision mediump float;
 
 uniform vec2 u_res;
 uniform float u_time;
+uniform float u_oct;   /* 1 = 桌面（三层噪声），0 = 手机（省一层） */
 
 /* 稳定哈希：不用 sin-dot 哈希，避免低端 GPU 溢出成噪点 */
 float hash(vec2 p){
@@ -176,43 +177,57 @@ float noise(vec2 p){
 
 mat2 rot(float a){ float c = cos(a), s = sin(a); return mat2(c, -s, s, c); }
 
-/* 一条斜向飘带：slope 倾斜度，base 高度，thick 厚度，curl 弯曲幅度 */
-float ribbon(vec2 p, float slope, float base, float thick, float spd, float seed, float curl, out float across){
+/* 值噪声的 2～3 层叠加，输出 0..1（均值约 0.5）。
+   oct = 1 用于桌面（三层），0 用于手机（省掉最细一层，减轻 GPU 负担） */
+float fbm(vec2 p, float oct){
+  float v = noise(p) * 0.60 + noise(p * 2.03 + 17.3) * 0.30;
+  v += oct * noise(p * 4.11 + 39.1) * 0.12;
+  return v;
+}
+
+/* 一条斜向飘带。
+   中心线的弯曲全部来自"随时间漂移的噪声"，而不是正弦——
+   正弦会在某些相位让整段带子局部变成直线（旧版放久了就是这个毛病），
+   噪声域一直在流动，形状永远不规则，也不会自己退化成一根面条。 */
+float ribbon(vec2 p, float slope, float base, float thick, float spd, float seed, float oct, out float across){
   float t = u_time * spd;
 
-  /* 中心线：三个尺度的波浪叠加（长弧 + 中波 + 短折），整条带缓慢扭动、游走 */
-  float cy = base + slope * p.x
-    + curl * sin(p.x * 0.88 + t + seed)
-    + curl * 0.48 * sin(p.x * 2.15 - t * 1.45 + seed * 2.3)
-    + curl * 0.22 * sin(p.x * 4.30 + t * 1.10 + seed * 3.7)
-    + 0.20 * (noise(vec2(p.x * 0.72 - t * 0.42, seed * 4.1)) - 0.5);
+  /* 中心线：斜线 + 三层不同尺度的漂移噪声（长波游走 / 中波起伏 / 细抖动）。
+     长波频率压得比较低，带子的斜向走势才不会被噪声打散成一片雾 */
+  float cy = base + slope * p.x;
+  cy += 0.30 * (fbm(vec2(p.x * 0.55 + seed * 4.7 - t * 0.42, seed * 2.3 + t * 0.07), oct) - 0.5);
+  cy += 0.13 * (fbm(vec2(p.x * 1.75 - seed * 6.1 + t * 0.80, seed * 3.9 - t * 0.11), oct) - 0.5);
+  cy += 0.045 * (noise(vec2(p.x * 5.6 + seed * 8.3 - t * 1.10, seed * 9.6)) - 0.5);
   float d = p.y - cy;
 
-  /* 宽度：两个尺度的噪声相乘——同一时刻不同部位宽窄差很多
-     （有的地方摊开成整片光幕，有的地方收窄成一条窄带），
-     下限抬到 0.62，最窄也是一条有厚度的带子，不会缩成面条 */
-  float w1 = noise(vec2(p.x * 0.85 + t * 0.26, seed * 7.3));
-  float w2 = noise(vec2(p.x * 2.20 - t * 0.62, seed * 3.1));
-  float th = thick * (0.62 + 1.55 * w1 * (0.50 + 0.80 * w2));
+  /* 宽度：低频噪声决定"哪里摊开成光幕、哪里收窄"，
+     最窄也保持 0.55 倍厚度，不会缩成一根细线 */
+  float wr = fbm(vec2(p.x * 0.62 + t * 0.20, seed * 7.7), oct);
+  float th = thick * (0.55 + 1.45 * wr);
 
-  /* 核心边缘收得紧一些，避免整条带子糊成虚焦；只在上侧留一小段辉光 */
+  /* 帘褶：沿带方向的成束明暗，束宽与位置都由噪声决定（不再是均匀条纹） */
+  float fold = fbm(vec2(p.x * 13.0 - t * 1.20, seed * 12.3), oct);
+
+  /* 核心 + 上侧辉光 */
   float x = d / th;
-  float core = exp(-x * x * 1.45);
-  float hx = max(d, 0.0) / (th * 1.75);
-  float halo = exp(-hx * hx) * 0.16;
+  float core = exp(-x * x * 1.70);
+  float hx = max(d, 0.0) / (th * 1.9);
+  float halo = exp(-hx * hx) * 0.14;
   float v = core + halo;
 
-  /* 细丝：带中心再叠一条更锐的亮丝，撑住结构感 */
-  float sx = d / (th * 0.40);
-  v += exp(-sx * sx) * 0.30 * (0.35 + 0.65 * noise(vec2(p.x * 8.5 - t * 1.4, seed * 5.5)));
+  /* 内侧亮丝：帘幕正中更锐的一条，结构不至于糊成一团光晕 */
+  v += exp(-x * x * 3.40) * 0.30 * (0.30 + 0.70 * fold);
 
-  /* 帘褶：沿带方向的高频明暗，缓慢流动 */
-  v *= 0.40 + 0.60 * noise(vec2(p.x * 12.0 - t * 1.7, seed * 11.0));
+  v *= 0.16 + 0.84 * fold;
+
+  /* 竖向光柱：极光下缘特有的丝状射线，位置随机、缓慢上移 */
+  v += exp(-x * x * 0.35) * 0.22
+     * pow(noise(vec2(p.x * 26.0 + seed * 3.3, seed * 5.1 + t * 0.35)), 2.0);
 
   /* 呼吸：整条带时强时弱，偶尔几乎隐没 */
-  v *= 0.22 + 0.78 * noise(vec2(p.x * 0.55 + t * 0.25, seed * 2.7));
+  v *= 0.20 + 0.80 * noise(vec2(p.x * 0.42 + t * 0.20, seed * 2.9));
 
-  across = clamp(d / (th * 2.0) + 0.45, 0.0, 1.0);
+  across = clamp(d / (th * 2.2) + 0.45, 0.0, 1.0);
   return v;
 }
 
@@ -267,19 +282,22 @@ void main(){
   stars *= (1.0 - smoothstep(0.42, 0.94, g)) * 0.85;
   sky += vec3(0.84, 0.91, 1.0) * stars;
 
-  /* ---------- 极光：三条斜向飘带 ---------- */
+  /* ---------- 极光：三条主飘带 + 一条很淡的远带，斜度、速度、种子互不相同 ---------- */
   float across;
   vec3 aur = vec3(0.0);
   float v;
 
-  v = ribbon(rp, 0.40, 0.02, 0.105, 0.052, 1.7, 0.28, across);
+  v = ribbon(rp, 0.40, 0.02, 0.055, 0.052, 1.7, u_oct, across);
   aur += bandColor(across) * v * 0.52;
 
-  v = ribbon(rp, 0.58, -0.20, 0.080, 0.038, 4.3, 0.22, across);
-  aur += bandColor(across) * v * 0.34;
+  v = ribbon(rp, 0.58, -0.20, 0.045, 0.038, 4.3, u_oct, across);
+  aur += bandColor(across) * v * 0.36;
 
-  v = ribbon(rp, 0.26, 0.24, 0.066, 0.068, 8.1, 0.17, across);
-  aur += bandColor(across) * v * 0.26;
+  v = ribbon(rp, 0.26, 0.24, 0.040, 0.068, 8.1, u_oct, across);
+  aur += bandColor(across) * v * 0.28;
+
+  v = ribbon(rp, 0.48, -0.46, 0.034, 0.030, 13.4, u_oct, across);
+  aur += bandColor(across) * v * 0.18;
 
   /* ---------- 雪地：地平线以下一片极淡的雪光，没有任何山影轮廓 ---------- */
   float ground = smoothstep(0.90, 1.02, g);
@@ -342,6 +360,7 @@ void main(){
 
       uRes = gl.getUniformLocation(prog, 'u_res');
       uTime = gl.getUniformLocation(prog, 'u_time');
+      gl.uniform1f(gl.getUniformLocation(prog, 'u_oct'), narrowAurora ? 0 : 1);
       return true;
     };
 

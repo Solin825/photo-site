@@ -563,6 +563,9 @@
       aria-modal="true"
       aria-label="作品预览"
     >
+      <!-- 环境光：两层交叉淡入，切图时背景是"溶"过去的，不是硬切 -->
+      <div class="lb-amb" id="lbAmbA" aria-hidden="true"></div>
+      <div class="lb-amb" id="lbAmbB" aria-hidden="true"></div>
       <button class="lightbox__close" id="lbClose" aria-label="关闭">
         <svg
           viewBox="0 0 24 24"
@@ -596,7 +599,11 @@
 
       <figure class="lb-stage">
         <div class="lb-viewport" id="lbViewport">
-          <div class="lb-photo" id="lbPhoto"></div>
+          <div class="lb-photo" id="lbPhoto">
+            <!-- 两层照片交叉淡入：上一层淡出的同时下一层带方向滑入 -->
+            <div class="lb-layer" aria-hidden="true"></div>
+            <div class="lb-layer" aria-hidden="true"></div>
+          </div>
         </div>
         <figcaption class="lb-meta">
           <span class="lb-exif" id="lbExifInline"

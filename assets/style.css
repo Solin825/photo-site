@@ -873,18 +873,18 @@ body.intro-playing { overflow: hidden; }
   opacity: 0; visibility: hidden;
   transition: opacity .38s var(--ease), visibility .38s;
 }
-/* 环境光背景：跟随当前照片（模糊放大 + 压暗提饱和），JS 写入 --lb-bg */
-.lightbox::before {
-  content: ""; position: absolute; inset: -130px;
+/* 环境光背景：两层交替，跟随当前照片（模糊放大 + 压暗提饱和），JS 写入每层的 background-image。
+   两层用 opacity 交叉淡入（.7s），切图时背景不会硬切 */
+.lb-amb {
+  position: absolute; inset: -130px;
   z-index: -1;
-  background-image: var(--lb-bg, none);
   background-size: cover; background-position: center;
   filter: blur(44px) brightness(.72) saturate(1.12);
   transform: scale(1.18);
   opacity: 0;
-  transition: opacity .55s var(--ease);
+  transition: opacity .7s var(--ease);
 }
-.lightbox.is-open::before { opacity: 1; }
+.lightbox.is-open .lb-amb.is-on { opacity: 1; }
 .lightbox.is-open { opacity: 1; visibility: visible; }
 
 .lightbox__close {
@@ -923,15 +923,35 @@ body.intro-playing { overflow: hidden; }
 }
 .lb-viewport::-webkit-scrollbar { width: 0; height: 0; }
 .lb-photo {
+  position: relative;
   margin: auto;
   flex: 0 0 auto;
-  background-size: 100% 100%;
-  background-position: center;
-  background-repeat: no-repeat;
   border-radius: 2px;
   box-shadow: 0 26px 70px -32px rgba(0, 0, 0, .55);
   will-change: width, height;
 }
+/* 照片层：两层叠在同一个框里，尺寸跟着 .lb-photo 走（缩放/平移自动一致） */
+.lb-layer {
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 1;
+}
+/* 切图入场：整片不透明地从右侧/左侧滑入（只动 transform，不做淡入）。
+   照片若从透明淡进来，镜头里会露着下面那层"上一张的模糊背景"，看起来就是两张叠在一起；
+   参考站也是照片整片滑入、只有背景做交叉溶 */
+@keyframes lb-slide-r {
+  from { transform: translate(40px, 0); }
+  to   { transform: translate(0, 0); }
+}
+@keyframes lb-slide-l {
+  from { transform: translate(-40px, 0); }
+  to   { transform: translate(0, 0); }
+}
+.lb-slide-r { animation: lb-slide-r .34s cubic-bezier(.16, 1, .3, 1); }
+.lb-slide-l { animation: lb-slide-l .34s cubic-bezier(.16, 1, .3, 1); }
 
 .lb-meta {
   display: flex; flex-direction: column; align-items: center;
@@ -1196,6 +1216,12 @@ body.is-leaving .site-footer {
   html.cursor-pending, html.cursor-pending * { cursor: auto !important; }
   .cursor { display: none; }
 
+  /* 手机：灯箱环境光那层 44px 模糊太贵，淡入时整屏会"亮一下"。
+     降到 20px，观感接近桌面、GPU 压力小很多 */
+  .lb-amb {
+    filter: blur(20px) brightness(.7) saturate(1.1);
+  }
+
   .nav {
     position: fixed; inset: 0;
     flex-direction: column; justify-content: center; align-items: flex-start;
@@ -1305,4 +1331,7 @@ body.is-leaving .site-footer {
   .intro { display: none; }
   body:not(.is-home)::before,
   body:not(.is-home)::after { animation: none; }
+  /* 灯箱：不做滑入、不做淡入淡出，直接到位 */
+  .lb-slide-r, .lb-slide-l { animation: none; }
+  .lb-layer, .lb-amb { transition: none; }
 }

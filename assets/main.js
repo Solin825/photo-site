@@ -577,6 +577,64 @@ void main(){
     const nextBtn = document.getElementById('lbNext');
     const closeBtn = document.getElementById('lbClose');
 
+    /* ---- 交叉淡入：照片两层 + 环境光两层，切图时"溶"过去而不是硬切 ---- */
+    const photoLayers = Array.from(photo?.querySelectorAll('.lb-layer') || []);
+    const ambLayers = Array.from(lightbox.querySelectorAll('.lb-amb'));
+    let layerIdx = 0;
+    let ambIdx = 0;
+    let ambTimer = 0;
+
+    const crossPhoto = (bg, dir) => {
+      if (!photoLayers.length) { photo.style.backgroundImage = bg; return; }
+      const cur = photoLayers[layerIdx];
+      const nxt = photoLayers[1 - layerIdx];
+      layerIdx = 1 - layerIdx;
+      /* 旧层立刻撤掉：照片本身不做交叉溶，否则中途两张叠在一起会看到重影。
+         新图在下面的模糊背景上滑进来，衔接感由背景那 0.7s 的交叉淡入来托 */
+      if (cur !== nxt) {
+        cur.classList.remove('lb-slide-r', 'lb-slide-l');
+        cur.style.animation = 'none';
+        cur.style.transition = 'none';
+        cur.style.opacity = '0';
+        cur.style.backgroundImage = '';
+      }
+      /* 新层：带图、复位、再入场 */
+      nxt.classList.remove('lb-slide-r', 'lb-slide-l');
+      nxt.style.animation = 'none';
+      nxt.style.transition = 'none';
+      nxt.style.backgroundImage = bg;
+      nxt.style.opacity = '1';
+      void nxt.offsetWidth;                    /* 强制回流，让动画从头开始 */
+      nxt.style.animation = '';
+      if (dir && !reduced) nxt.classList.add(dir > 0 ? 'lb-slide-r' : 'lb-slide-l');
+    };
+
+    const crossAmb = (bg, instant) => {
+      if (!ambLayers.length) return;
+      clearTimeout(ambTimer);
+      const cur = ambLayers[ambIdx];
+      const nxt = ambLayers[1 - ambIdx];
+      ambIdx = 1 - ambIdx;
+      nxt.style.backgroundImage = bg;
+      nxt.classList.add('is-on');
+      if (instant) {
+        cur.classList.remove('is-on');
+        return;
+      }
+      cur.classList.remove('is-on');
+      ambTimer = setTimeout(() => { cur.style.backgroundImage = ''; }, 800);
+    };
+    const resetAmb = () => {
+      ambLayers.forEach((l) => l.classList.remove('is-on'));
+      clearTimeout(ambTimer);
+      /* 面板淡出的同时背景也淡出，0.8s 后再清图，避免照片在淡出中途突然消失 */
+      ambTimer = setTimeout(() => {
+        ambLayers.forEach((l) => {
+          if (!l.classList.contains('is-on')) l.style.backgroundImage = '';
+        });
+      }, 800);
+    };
+
     /* ---- 拍摄参数：桌面显示一行文字（无参数时不显示图标）；
        手机显示「查看拍摄参数」按钮，点开底部参数面板 ---- */
     const exifInline = document.getElementById('lbExifInline');
@@ -710,24 +768,28 @@ void main(){
     };
 
     let renderSeq = 0;
-    const render = (i) => {
+    /* 返回 Promise：图片解码完并画到画布上之后才 resolve。
+       开灯箱时先等它，避免"面板已经淡入、图还没贴上来"造成的闪一下。
+       dir：+1 从右侧滑入（下一张）、-1 从左侧滑入（上一张）、0 不做滑入（首次打开） */
+    const render = (i, dir = 0) => new Promise((resolve) => {
       index = ((i % shots.length) + shots.length) % shots.length;
       const item = shots[index];
       const url = urlOf(item);
       const seq = ++renderSeq;
 
       const paint = () => {
-        if (seq !== renderSeq) return;
+        if (seq !== renderSeq) { resolve(); return; }   /* 被后来的切换顶掉了，不画但也不要卡住调用方 */
         const bg = url
           ? `url("${url}")`
           : (item.querySelector('.shot__img')?.style.backgroundImage || '');
-        photo.style.backgroundImage = bg;
-        lightbox.style.setProperty('--lb-bg', absBg(bg));
+        crossPhoto(bg, dir);
+        crossAmb(absBg(bg));
         renderMeta(item.dataset.exif);
         zoom = MIN_Z;
         fitBox();
         applyZoom();
         viewport.scrollTo({ top: 0, left: 0 });
+        resolve();
       };
 
       // 预取前后各一张：方向键连按时下一张通常已解码好
@@ -740,16 +802,20 @@ void main(){
       im.onload = () => { keep(url, im); paint(); };
       im.onerror = () => paint();
       im.src = url;
-    };
+    });
 
     const openBox = (item) => {
       lastFocused = item;
-      lightbox.classList.add('is-open');
-      lightbox.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-      render(shots.indexOf(item));
-      closeBtn?.focus({ preventScroll: true });
+      const at = shots.indexOf(item);
+      /* 先解码/画好，再开面板淡入：首帧就是成品图，不会闪 */
+      render(at).then(() => {
+        lightbox.classList.add('is-open');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        closeBtn?.focus({ preventScroll: true });
+      });
     };
+
 
     const closeBox = () => {
       if (!lightbox.classList.contains('is-open')) return;
@@ -757,10 +823,13 @@ void main(){
       lightbox.classList.remove('is-open');
       lightbox.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
+      resetAmb();
       lastFocused?.focus({ preventScroll: true });
     };
 
     shots.forEach((item) => {
+      /* 按下就先解码当前这张：等 click 触发时通常已经解码好，开箱即到位（手机上尤其明显） */
+      item.addEventListener('pointerdown', () => prime(item), { passive: true });
       item.addEventListener('click', () => openBox(item));
       item.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -814,7 +883,7 @@ void main(){
       swipe = null;
       if (zoom > 1.02) return; // 放大后滑动是看画面，不切图
       if (dt < 700 && Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.5) {
-        render(index + (dx < 0 ? 1 : -1));
+        render(index + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1);
       }
     });
     viewport.addEventListener('touchcancel', () => { swipe = null; pinch = null; });
@@ -843,8 +912,8 @@ void main(){
     // 双击在 100% 与 200% 之间切换（以图片中心为准）
     viewport.addEventListener('dblclick', () => setZoomCenter(zoom > 1.2 ? 1 : 2));
 
-    prevBtn?.addEventListener('click', () => render(index - 1));
-    nextBtn?.addEventListener('click', () => render(index + 1));
+    prevBtn?.addEventListener('click', () => render(index - 1, -1));
+    nextBtn?.addEventListener('click', () => render(index + 1, 1));
     closeBtn?.addEventListener('click', closeBox);
     lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeBox(); });
 
@@ -873,8 +942,8 @@ void main(){
         if (sheet && sheet.classList.contains('is-open')) closeSheet();
         else closeBox();
       }
-      else if (e.key === 'ArrowLeft') render(index - 1);
-      else if (e.key === 'ArrowRight') render(index + 1);
+      else if (e.key === 'ArrowLeft') render(index - 1, -1);
+      else if (e.key === 'ArrowRight') render(index + 1, 1);
       else if (e.key === '+' || e.key === '=') setZoomCenter(zoom * 1.15);
       else if (e.key === '-') setZoomCenter(zoom / 1.15);
     });

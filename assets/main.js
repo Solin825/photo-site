@@ -359,13 +359,25 @@ void main(){
 
     if (gl && fragHigh >= 16 && setup()) {
       body.classList.add('has-aurora');
+      let lockedH = 0;   /* 手机地址栏伸缩几十像素不算真改变，高度按这个"钉住" */
       const resize = () => {
-        const w = Math.max(1, Math.round(window.innerWidth * SCALE));
-        const h = Math.max(1, Math.round(window.innerHeight * SCALE));
-        if (cv.width !== w || cv.height !== h) {
-          cv.width = w;
-          cv.height = h;
+        /* 用元素自身的布局尺寸，而不是 window.innerHeight：
+           手机滚动时地址栏收起会让 innerHeight 变化几十像素，画布重建一次星空就整体重排（"跳变"）。 */
+        const cw = cv.clientWidth || window.innerWidth;
+        const chh = cv.clientHeight || window.innerHeight;
+        /* 高度变化超过 120px 才认（真转屏/改窗口）；小于这个就当地址栏伸缩，沿用原高度，
+           画布被 CSS 轻微拉伸一两成，肉眼看不出来，但星空不会重排 */
+        if (!lockedH || Math.abs(chh - lockedH) > 120) lockedH = chh;
+        const w = Math.max(1, Math.round(cw * SCALE));
+        const h = Math.max(1, Math.round(lockedH * SCALE));
+        /* 兜底：只差一两像素时不重建（重建会清屏闪一下） */
+        if (Math.abs(w - cv.width) < 2 && Math.abs(h - cv.height) < 2) {
+          gl.viewport(0, 0, cv.width, cv.height);
+          gl.uniform2f(uRes, cv.width, cv.height);
+          return;
         }
+        cv.width = w;
+        cv.height = h;
         gl.viewport(0, 0, w, h);
         gl.uniform2f(uRes, w, h);
       };

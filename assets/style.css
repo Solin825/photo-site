@@ -124,10 +124,13 @@ body:not(.is-home)::after {
 /* 极光：WebGL 实时渲染的斜向飘带 + 闪烁星空（由 main.js 注入） */
 .aurora-canvas {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
   display: block;
   width: 100%;
-  height: 100%;
+  /* 高度钉死在大视口（100vh = 地址栏收起后的高度），不跟地址栏伸缩走：
+     否则手机一滚动、地址栏收起，画布就被重建一次，星空会整体重排成"跳变" */
+  height: 100vh;
   z-index: -1;
   pointer-events: none;
   /* 不加 filter：整屏 WebGL 层再加 CSS 滤镜，安卓 GPU 上容易出现横向/纵向拼接条纹 */

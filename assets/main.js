@@ -123,9 +123,11 @@
     onScroll(() => scrollHint.classList.toggle('is-hidden', window.scrollY > 140));
   }
 
-  /* ---------- 07 Aurora：斜向极光飘带 + 闪烁星空（WebGL，仅非首页） ----------
-     手机端也启用，但走更保守的参数：渲染分辨率降到 0.7、保留绘制缓冲（preserveDrawingBuffer），
-     并把横幅的横向坐标按至少 1 展开，避免竖屏窄画布上帘褶退化成几条竖带。
+  /* ---------- 07 Aurora：闪烁星空 + 极光飘带（WebGL，仅非首页） ----------
+     桌面（宽 ≥820）：三条正弦飘带 + 三层星空。
+     手机（宽 <820）：只画星空（u_narrow = 1 跳过飘带与雪地），因为安卓整屏合成 WebGL
+     容易出竖条、手机端也不常看；渲染分辨率给到 0.9 让星点更锐。
+     两种情况都保留绘制缓冲（preserveDrawingBuffer），否则安卓会读到半帧、出现黑色撕裂条。
      若某台设备仍然渲染异常，把 auroraEligible 加一条 window.innerWidth >= 820 即可退回 CSS 极光层。 */
   const narrowAurora = window.innerWidth < 820;
   const auroraEligible = !body.classList.contains('is-home');
@@ -136,7 +138,7 @@
     cv.setAttribute('aria-hidden', 'true');
     body.appendChild(cv);
 
-    const SCALE = narrowAurora ? 0.7 : 0.8; // 渲染分辨率（0.55 时放大后偏糊，0.8 保留丝状细节）
+    const SCALE = narrowAurora ? 0.9 : 0.8; // 手机只画星空，可以给到 0.9 让星点更锐；桌面 0.8 保留丝状细节
     const gl = cv.getContext('webgl', {
       alpha: false, antialias: false, depth: false, stencil: false,
       premultipliedAlpha: false,
@@ -156,6 +158,7 @@ precision mediump float;
 
 uniform vec2 u_res;
 uniform float u_time;
+uniform float u_narrow;   /* 1 = 手机：只画星空，不画极光与地面 */
 
 /* 稳定哈希：不用 sin-dot 哈希，避免低端 GPU 溢出成噪点 */
 float hash(vec2 p){
@@ -229,7 +232,7 @@ void main(){
   vec2 p = vec2((uv.x - 0.5) * asp, 0.5 - uv.y);  /* 中心为原点，y 向上 */
   /* 竖屏画布很窄：横幅的横向跨度至少按 1.0 计，否则帘褶只铺满几个格子，会退化成几条竖带 */
   vec2 rp = vec2((uv.x - 0.5) * max(asp, 1.0), 0.5 - uv.y);
-  float g = uv.y;                                 /* 0 = 天顶，1 = 地平线 */
+  float g = uv.y;                                 /* gl_FragCoord 以左下角为原点：g=0 在屏幕底端，g=1 在顶端 */
   float t = u_time;
 
   /* ---------- 夜空：深蓝，越靠地平线越泛一点青 ---------- */
@@ -267,19 +270,22 @@ void main(){
   stars *= (1.0 - smoothstep(0.42, 0.94, g)) * 0.85;
   sky += vec3(0.84, 0.91, 1.0) * stars;
 
-  /* ---------- 极光：三条斜向飘带 ---------- */
-  float across;
+  /* ---------- 极光：三条斜向飘带（手机端整块跳过，只留星空） ---------- */
   vec3 aur = vec3(0.0);
-  float v;
 
-  v = ribbon(rp, 0.40, 0.02, 0.105, 0.052, 1.7, 0.28, across);
-  aur += bandColor(across) * v * 0.52;
+  if (u_narrow < 0.5) {
+    float across;
+    float v;
 
-  v = ribbon(rp, 0.58, -0.20, 0.080, 0.038, 4.3, 0.22, across);
-  aur += bandColor(across) * v * 0.34;
+    v = ribbon(rp, 0.40, 0.02, 0.105, 0.052, 1.7, 0.28, across);
+    aur += bandColor(across) * v * 0.52;
 
-  v = ribbon(rp, 0.26, 0.24, 0.066, 0.068, 8.1, 0.17, across);
-  aur += bandColor(across) * v * 0.26;
+    v = ribbon(rp, 0.58, -0.20, 0.080, 0.038, 4.3, 0.22, across);
+    aur += bandColor(across) * v * 0.34;
+
+    v = ribbon(rp, 0.26, 0.24, 0.066, 0.068, 8.1, 0.17, across);
+    aur += bandColor(across) * v * 0.26;
+  }
 
   /* ---------- 雪地：地平线以下一片极淡的雪光，没有任何山影轮廓 ---------- */
   float ground = smoothstep(0.90, 1.02, g);
@@ -342,6 +348,7 @@ void main(){
 
       uRes = gl.getUniformLocation(prog, 'u_res');
       uTime = gl.getUniformLocation(prog, 'u_time');
+      gl.uniform1f(gl.getUniformLocation(prog, 'u_narrow'), narrowAurora ? 1 : 0);
       return true;
     };
 

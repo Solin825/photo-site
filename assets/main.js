@@ -714,27 +714,36 @@ void main(){
     };
 
     let renderSeq = 0;
-    /* 返回 Promise：图片解码完并画到画布上之后才 resolve。
-       开灯箱时先等它，避免"面板已经淡入、图还没贴上来"造成的闪一下。
-       dir：+1 从右侧滑入（下一张）、-1 从左侧滑入（上一张）、0 不做滑入（首次打开） */
+    /* 返回 Promise：该显示的画面挂上去就 resolve。
+       大图还没就绪时，先用照片墙里那张已经在内存中的缩略图顶上：
+       点开立刻可见，大图解码完再无声替换；2.6s 还没下来就一直用缩略图，
+       绝不出现"点了没反应"或空白帧（手机上尤其关键）。
+       dir：+1 从右侧滑入（下一张）、-1 从左侧滑入（上一张）、0 不做滑入（首次打开/替换） */
+    const paint = (item, dir, bg, keepView) => {
+      crossPhoto(bg, dir);
+      crossAmb(absBg(bg));
+      renderPlace(item);
+      /* 大图迟到替换时保持用户已经做的缩放和平移，不要把人拉回 100% */
+      if (keepView) return;
+      zoom = MIN_Z;
+      fitBox();
+      applyZoom();
+      viewport.scrollTo({ top: 0, left: 0 });
+    };
+
     const render = (i, dir = 0) => new Promise((resolve) => {
       index = ((i % shots.length) + shots.length) % shots.length;
       const item = shots[index];
       const url = urlOf(item);
       const seq = ++renderSeq;
+      const thumbEl = item.querySelector('.shot__img');
+      const thumbUrl = thumbEl ? (thumbEl.currentSrc || thumbEl.src || '') : '';
+      const thumbBg = thumbUrl ? `url("${thumbUrl}")` : '';
+      const fullBg = url ? `url("${url}")` : thumbBg;
 
-      const paint = () => {
+      const finish = (bg, d = dir, keepView = false) => {
         if (seq !== renderSeq) { resolve(); return; }   /* 被后来的切换顶掉了，不画但也不要卡住调用方 */
-        const bg = url
-          ? `url("${url}")`
-          : (item.querySelector('.shot__img')?.style.backgroundImage || '');
-        crossPhoto(bg, dir);
-        crossAmb(absBg(bg));
-        renderPlace(item);
-        zoom = MIN_Z;
-        fitBox();
-        applyZoom();
-        viewport.scrollTo({ top: 0, left: 0 });
+        paint(item, d, bg, keepView);
         resolve();
       };
 
@@ -742,12 +751,26 @@ void main(){
       prime(shots[(index + 1) % shots.length]);
       prime(shots[(index - 1 + shots.length) % shots.length]);
 
-      if (!url || imgCache.has(url)) { paint(); return; }
-      // 未缓存：等图片解码完再换，避免出现空白帧和拉伸的旧图
+      if (!url || imgCache.has(url)) { finish(fullBg); return; }
+
+      // 大图未就绪：先把缩略图顶上（通常已在缓存，立即可见）
+      if (thumbBg) finish(thumbBg);
+
       const im = new Image();
-      im.onload = () => { keep(url, im); paint(); };
-      im.onerror = () => paint();
+      let settled = false;
+      const arrive = () => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timer);
+        if (im.naturalWidth) keep(url, im);
+        finish(fullBg, 0, true);   // 大图到位后原地替换，不滑入、不动缩放
+      };
+      // 超时兜底：图迟迟不落地也不要让调用方一直等（缩略图已经在屏上了）
+      const timer = setTimeout(() => resolve(), 2600);
+      im.onload = arrive;
+      im.onerror = arrive;
       im.src = url;
+      void timer;
     });
 
     const openBox = (item) => {

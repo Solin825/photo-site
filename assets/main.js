@@ -635,69 +635,15 @@ void main(){
       }, 800);
     };
 
-    /* ---- 拍摄参数：桌面显示一行文字（无参数时不显示图标）；
-       手机显示「查看拍摄参数」按钮，点开底部参数面板 ---- */
-    const exifInline = document.getElementById('lbExifInline');
-    const exifTextEl = document.getElementById('lbExif');
-    const exifBtn = document.getElementById('lbExifBtn');
-    const exifNone = document.getElementById('lbExifNone');
-    const sheet = document.getElementById('lbSheet');
-    const sheetGrid = document.getElementById('lbSheetGrid');
-    const sheetClose = document.getElementById('lbSheetClose');
+    /* ---- 照片下面那一行只显示拍摄地点（参数、日期都不显示）。
+       地点来自每张照片的 data-place（由 build_wall.py 从母库文件名里取）；
+       没有地点的（EXIF 丢失那批老照片）显示「地点待补」 ---- */
+    const PLACE_FALLBACK = '地点待补';
+    const placeTextEl = document.getElementById('lbPlaceText');
 
-    const EXIF_FIELDS = [
-      ['device', '机身'], ['focal', '焦距'], ['aperture', '光圈'],
-      ['shutter', '快门'], ['iso', '感光度'], ['date', '拍摄时间'],
-    ];
-
-    // data-exif 的格式是「设备 · 焦距 · 光圈 · 快门 · ISO · 日期」，按特征归位
-    const parseExif = (text) => {
-      const out = {};
-      String(text || '').split('·').map((s) => s.trim()).filter(Boolean).forEach((tok) => {
-        if (/^iso/i.test(tok)) out.iso = tok.replace(/^iso/i, 'ISO');
-        else if (/^f\//i.test(tok)) out.aperture = tok.toLowerCase();
-        else if (/mm$/i.test(tok)) out.focal = tok;
-        else if (/^\d+\/\d+\s?s$/i.test(tok) || /^\d+(\.\d+)?\s?s$/i.test(tok)) out.shutter = tok;
-        else if (/^\d{4}-\d{2}-\d{2}$/.test(tok)) out.date = tok;
-        else if (!out.device) out.device = tok;
-      });
-      return out;
-    };
-
-    const closeSheet = () => {
-      if (!sheet) return;
-      sheet.classList.remove('is-open');
-      exifBtn?.setAttribute('aria-expanded', 'false');
-    };
-
-    const fillSheet = (fields) => {
-      if (!sheetGrid) return;
-      sheetGrid.textContent = '';
-      EXIF_FIELDS.forEach(([key, label]) => {
-        const value = fields[key];
-        if (!value) return;
-        const cell = document.createElement('div');
-        cell.className = 'lb-sheet__cell';
-        const dt = document.createElement('dt');
-        dt.textContent = label;
-        const dd = document.createElement('dd');
-        dd.textContent = value;
-        cell.append(dt, dd);
-        sheetGrid.appendChild(cell);
-      });
-    };
-
-    // 有参数：桌面一行文字 + 手机按钮；无参数：只显示「EXIF 已丢失」，不出现任何图标
-    const renderMeta = (raw) => {
-      const text = String(raw || '').trim();
-      const missing = !text || /丢失|lost/i.test(text);
-      closeSheet();
-      exifInline?.classList.toggle('is-off', missing);
-      exifBtn?.classList.toggle('is-off', missing);
-      exifNone?.classList.toggle('is-off', !missing);
-      if (missing) { fillSheet({}); return; }
-      if (exifTextEl) exifTextEl.textContent = text;
-      fillSheet(parseExif(text));
+    const renderPlace = (item) => {
+      const place = String(item?.dataset.place || '').trim() || PLACE_FALLBACK;
+      if (placeTextEl) placeTextEl.textContent = place;
     };
 
     const MIN_Z = 1;
@@ -784,7 +730,7 @@ void main(){
           : (item.querySelector('.shot__img')?.style.backgroundImage || '');
         crossPhoto(bg, dir);
         crossAmb(absBg(bg));
-        renderMeta(item.dataset.exif);
+        renderPlace(item);
         zoom = MIN_Z;
         fitBox();
         applyZoom();
@@ -819,7 +765,6 @@ void main(){
 
     const closeBox = () => {
       if (!lightbox.classList.contains('is-open')) return;
-      closeSheet();
       lightbox.classList.remove('is-open');
       lightbox.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
@@ -917,14 +862,6 @@ void main(){
     closeBtn?.addEventListener('click', closeBox);
     lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeBox(); });
 
-    // 参数面板：按钮展开/收起，面板内的点击不冒泡到灯箱背景
-    exifBtn?.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const open = sheet ? sheet.classList.toggle('is-open') : false;
-      exifBtn.setAttribute('aria-expanded', String(open));
-    });
-    sheetClose?.addEventListener('click', (e) => { e.stopPropagation(); closeSheet(); });
-    sheet?.addEventListener('click', (e) => e.stopPropagation());
 
     // 窗口尺寸变化：灯箱开着时按新视口重算基准尺寸，保留当前缩放倍率
     onResize(() => {
@@ -937,11 +874,7 @@ void main(){
 
     document.addEventListener('keydown', (e) => {
       if (!lightbox.classList.contains('is-open')) return;
-      if (e.key === 'Escape') {
-        // 参数面板开着时先收面板，再退出灯箱
-        if (sheet && sheet.classList.contains('is-open')) closeSheet();
-        else closeBox();
-      }
+      if (e.key === 'Escape') closeBox();
       else if (e.key === 'ArrowLeft') render(index - 1, -1);
       else if (e.key === 'ArrowRight') render(index + 1, 1);
       else if (e.key === '+' || e.key === '=') setZoomCenter(zoom * 1.15);
@@ -1167,8 +1100,9 @@ void main(){
         // rAF 时间戳可能早于脚本 t0，必须夹紧，否则负数 pow 产生 NaN
         const p = Math.max(0, Math.min(1, (now - t0.v) / DUR));
         // 速度曲线：前 58% 加速冲刺，之后长距离缓慢减速，末段近乎悬停
+        // 起步给一点初速（0.16），一开画面就有微动，不会先"静一瞬"再起飞
         const speed = p < 0.58
-          ? Math.pow(p / 0.58, 1.7)
+          ? 0.16 + 0.84 * Math.pow(p / 0.58, 1.7)
           : Math.max(0, 1 - Math.pow((p - 0.58) / 0.42, 1.9) * 0.98);
         const smooth = p * p * (3 - 2 * p); // smoothstep，收尾更柔
 
@@ -1199,7 +1133,7 @@ void main(){
           const a1 = proj(s.z);
           const a2 = proj(Math.max(0.06, zPrev));
           const near = 1 - s.z;
-          const alpha = Math.min(0.95, near * 1.05) * (0.5 + speed * 0.5);
+          const alpha = Math.min(0.95, near * 1.05) * (0.72 + speed * 0.28);
           if (alpha <= 0.02) continue;
 
           ictx.strokeStyle = s.gold
@@ -1227,11 +1161,13 @@ void main(){
         requestAnimationFrame(drawIntro);
       };
 
-      // 不再需要点击：门页出现后自动播放（点一下仍然能提前跳过）
-      const auto = window.setTimeout(start, 800);
-      introEl.addEventListener('click', () => { clearTimeout(auto); start(); });
+      // 不再需要点击：门页一出现就起飞，不留静置时间（原来 800→350ms 还是有"愣一下"）。
+      // 用一帧 rAF 等门页画上去再计时，避免首帧抢在布局前面。
+      // 点一下 / 回车仍然有效，但只是重复触发，start 里有 flying 守卫不会重播。
+      requestAnimationFrame(start);
+      introEl.addEventListener('click', start);
       introEl.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); clearTimeout(auto); start(); }
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); start(); }
       });
     }
   }

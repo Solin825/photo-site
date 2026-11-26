@@ -56,482 +56,1429 @@
           </p>
 
           <!--
-        每张照片的大图信息都在 <figure class="shot"> 上，直接改属性即可：
-          data-exif   设备 · 焦距 · 光圈 · 快门 · ISO · 拍摄日期（缺 EXIF 的写「exif已丢失」）
+        每张照片的属性都在 <figure class="shot"> 上，直接改属性即可：
+          data-place  拍摄地点（从母库文件名里取，显示在大图下面那一行）
+          data-date   角上那个日期（月.日），桌面悬停显形、手机常显
           data-ar     照片宽高比（按原图实际比例填，大图查看时用）
-        照片按拍摄日期分组排序：文件名前 8 位即 YYYYMMDD；由 tools/build_wall.py 自动生成，不要手改
+        层级是 年 → 月 → 照片（按日期 + 时间倒序）；由 tools/build_wall.py 自动生成，不要手改
       -->
           <div class="gallery-wrap">
             <div class="year-group">
               <div class="year-label">2026</div>
-              <div class="pf-grid">
-                <figure
-                  class="shot reveal"
-                  tabindex="0"
-                  role="button"
-                  style="--ar: 0.75"
-                  data-ar="0.75"
-                  data-exif="OPPO Find X9 · 73mm · f/2.6 · 1/15s · ISO4000 · 2026-10-24"
-                  data-src="assets/portfolio/large/exif_exist/20261024_01.jpg"
-                >
-                  <div
-                    class="shot__img"
-                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20261024_01.jpg');"
-                  ></div>
-                </figure>
-                <figure
-                  class="shot reveal"
-                  tabindex="0"
-                  role="button"
-                  style="--ar: 0.75"
-                  data-ar="0.75"
-                  data-exif="OPPO Find X9 · 73mm · f/2.6 · 1/25s · ISO1000 · 2026-10-07"
-                  data-src="assets/portfolio/large/exif_exist/20261007_01.jpg"
-                >
-                  <div
-                    class="shot__img"
-                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20261007_01.jpg');"
-                  ></div>
-                </figure>
-                <figure
-                  class="shot reveal"
-                  tabindex="0"
-                  role="button"
-                  style="--ar: 0.451"
-                  data-ar="0.451"
-                  data-exif="vivo X90 Pro+ · 77mm · f/1.6 · 1/2817s · ISO50 · 2026-08-09"
-                  data-src="assets/portfolio/large/exif_exist/20260809_01.jpg"
-                >
-                  <div
-                    class="shot__img"
-                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20260809_01.jpg');"
-                  ></div>
-                </figure>
-                <figure
-                  class="shot reveal"
-                  tabindex="0"
-                  role="button"
-                  style="--ar: 0.75"
-                  data-ar="0.75"
-                  data-exif="vivo X90 Pro+ · 50mm · f/1.6 · 1/728s · ISO50 · 2026-07-05"
-                  data-src="assets/portfolio/large/exif_exist/20260705_01.jpg"
-                >
-                  <div
-                    class="shot__img"
-                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20260705_01.jpg');"
-                  ></div>
-                </figure>
-                <figure
-                  class="shot reveal"
-                  tabindex="0"
-                  role="button"
-                  style="--ar: 1.333"
-                  data-ar="1.333"
-                  data-exif="vivo X90 Pro+ · 257mm · f/3.5 · 1/500s · ISO86 · 2026-02-20"
-                  data-src="assets/portfolio/large/exif_exist/20260220_01.jpg"
-                >
-                  <div
-                    class="shot__img"
-                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20260220_01.jpg');"
-                  ></div>
-                </figure>
-                <div class="pf-filler" aria-hidden="true"></div>
+              <div class="year-body">
+                <div class="month-group">
+                  <div class="month-label">11月<span class="month-rule" aria-hidden="true"></span></div>
+                  <div class="pf-grid">
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.333"
+                      data-ar="1.333"
+                      data-date="11.07"
+                      data-place="广东省广州市 · 珠江公园"
+                      data-src="assets/portfolio/large/exif_exist/IMG20261107151429广东省广州市·珠江公园.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG20261107151429广东省广州市·珠江公园.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.75"
+                      data-ar="0.75"
+                      data-date="11.07"
+                      data-place="广东省广州市 · 珠江公园"
+                      data-src="assets/portfolio/large/exif_exist/IMG20261107145516广东省广州市·珠江公园.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG20261107145516广东省广州市·珠江公园.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.75"
+                      data-ar="0.75"
+                      data-date="11.07"
+                      data-place="广东省广州市 · 珠江公园"
+                      data-src="assets/portfolio/large/exif_exist/IMG20261107145339广东省广州市·珠江公园.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG20261107145339广东省广州市·珠江公园.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.75"
+                      data-ar="0.75"
+                      data-date="11.07"
+                      data-place="广东省广州市 · 珠江公园"
+                      data-src="assets/portfolio/large/exif_exist/IMG20261107144654广东省广州市·珠江公园.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG20261107144654广东省广州市·珠江公园.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.75"
+                      data-ar="0.75"
+                      data-date="11.07"
+                      data-place="广东省广州市 · 珠江公园"
+                      data-src="assets/portfolio/large/exif_exist/IMG20261107142758广东省广州市·珠江公园.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG20261107142758广东省广州市·珠江公园.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.333"
+                      data-ar="1.333"
+                      data-date="11.07"
+                      data-place="广东省广州市 · 珠江公园"
+                      data-src="assets/portfolio/large/exif_exist/IMG20261107142514广东省广州市·珠江公园.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG20261107142514广东省广州市·珠江公园.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.75"
+                      data-ar="0.75"
+                      data-date="11.07"
+                      data-place="广东省广州市 · 珠江公园"
+                      data-src="assets/portfolio/large/exif_exist/IMG20261107140355广东省广州市·珠江公园.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG20261107140355广东省广州市·珠江公园.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.75"
+                      data-ar="0.75"
+                      data-date="11.07"
+                      data-place="广东省广州市"
+                      data-src="assets/portfolio/large/exif_exist/IMG20261107140215广东省广州市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG20261107140215广东省广州市.jpg');"
+                      ></div>
+                    </figure>
+                    <div class="pf-filler" aria-hidden="true"></div>
+                  </div>
+                </div>
+                <div class="month-group">
+                  <div class="month-label">10月<span class="month-rule" aria-hidden="true"></span></div>
+                  <div class="pf-grid">
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.75"
+                      data-ar="0.75"
+                      data-date="10.24"
+                      data-place="广东省广州市"
+                      data-src="assets/portfolio/large/exif_exist/20261024_01-广东省广州市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/20261024_01-广东省广州市.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.75"
+                      data-ar="0.75"
+                      data-date="10.07"
+                      data-place="广东省广州市"
+                      data-src="assets/portfolio/large/exif_exist/20261007_01-广东省广州市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/20261007_01-广东省广州市.jpg');"
+                      ></div>
+                    </figure>
+                    <div class="pf-filler" aria-hidden="true"></div>
+                  </div>
+                </div>
+                <div class="month-group">
+                  <div class="month-label">8月<span class="month-rule" aria-hidden="true"></span></div>
+                  <div class="pf-grid">
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.451"
+                      data-ar="0.451"
+                      data-date="8.09"
+                      data-place="广东省茂名市"
+                      data-src="assets/portfolio/large/exif_exist/20260809_01-广东省茂名市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/20260809_01-广东省茂名市.jpg');"
+                      ></div>
+                    </figure>
+                    <div class="pf-filler" aria-hidden="true"></div>
+                  </div>
+                </div>
+                <div class="month-group">
+                  <div class="month-label">7月<span class="month-rule" aria-hidden="true"></span></div>
+                  <div class="pf-grid">
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.75"
+                      data-ar="0.75"
+                      data-date="7.05"
+                      data-place="广东省东莞市"
+                      data-src="assets/portfolio/large/exif_exist/20260705_01-广东省东莞市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/20260705_01-广东省东莞市.jpg');"
+                      ></div>
+                    </figure>
+                    <div class="pf-filler" aria-hidden="true"></div>
+                  </div>
+                </div>
+                <div class="month-group">
+                  <div class="month-label">6月<span class="month-rule" aria-hidden="true"></span></div>
+                  <div class="pf-grid">
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.75"
+                      data-ar="0.75"
+                      data-date="6.01"
+                      data-place="广东省广州市 · 长隆"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20260601_160038广东省广州市·长隆.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20260601_160038广东省广州市·长隆.jpg');"
+                      ></div>
+                    </figure>
+                    <div class="pf-filler" aria-hidden="true"></div>
+                  </div>
+                </div>
+                <div class="month-group">
+                  <div class="month-label">2月<span class="month-rule" aria-hidden="true"></span></div>
+                  <div class="pf-grid">
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.333"
+                      data-ar="1.333"
+                      data-date="2.20"
+                      data-place="广东省茂名市"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20260220_163342广东省茂名市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20260220_163342广东省茂名市.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.333"
+                      data-ar="1.333"
+                      data-date="2.20"
+                      data-place="广东省茂名市"
+                      data-src="assets/portfolio/large/exif_exist/20260220_01-广东省茂名市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/20260220_01-广东省茂名市.jpg');"
+                      ></div>
+                    </figure>
+                    <div class="pf-filler" aria-hidden="true"></div>
+                  </div>
+                </div>
               </div>
             </div>
 
             <div class="year-group">
               <div class="year-label">2025</div>
-              <div class="pf-grid">
-                <figure
-                  class="shot reveal"
-                  tabindex="0"
-                  role="button"
-                  style="--ar: 0.75"
-                  data-ar="0.75"
-                  data-exif="vivo X90 Pro+ · 257mm · f/3.5 · 1/100s · ISO197 · 2025-07-08"
-                  data-src="assets/portfolio/large/exif_exist/20250708_01.jpg"
-                >
-                  <div
-                    class="shot__img"
-                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20250708_01.jpg');"
-                  ></div>
-                </figure>
-                <figure
-                  class="shot reveal"
-                  tabindex="0"
-                  role="button"
-                  style="--ar: 0.61"
-                  data-ar="0.61"
-                  data-exif="vivo X90 Pro+ · 23mm · f/1.75 · 1/2710s · ISO50 · 2025-02-03"
-                  data-src="assets/portfolio/large/exif_exist/20250203_02.jpg"
-                >
-                  <div
-                    class="shot__img"
-                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20250203_02.jpg');"
-                  ></div>
-                </figure>
-                <figure
-                  class="shot reveal"
-                  tabindex="0"
-                  role="button"
-                  style="--ar: 1.333"
-                  data-ar="1.333"
-                  data-exif="vivo X90 Pro+ · 118mm · f/3.5 · 1/362s · ISO50 · 2025-02-03"
-                  data-src="assets/portfolio/large/exif_exist/20250203_01.jpg"
-                >
-                  <div
-                    class="shot__img"
-                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20250203_01.jpg');"
-                  ></div>
-                </figure>
-                <figure
-                  class="shot reveal"
-                  tabindex="0"
-                  role="button"
-                  style="--ar: 1.347"
-                  data-ar="1.347"
-                  data-exif="vivo X90 Pro+ · 90mm · f/3.5 · 1/919s · ISO138 · 2025-01-11"
-                  data-src="assets/portfolio/large/exif_exist/20250111_07.jpg"
-                >
-                  <div
-                    class="shot__img"
-                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20250111_07.jpg');"
-                  ></div>
-                </figure>
-                <figure
-                  class="shot reveal"
-                  tabindex="0"
-                  role="button"
-                  style="--ar: 0.75"
-                  data-ar="0.75"
-                  data-exif="vivo X90 Pro+ · 342mm · f/3.5 · 1/500s · ISO70 · 2025-01-11"
-                  data-src="assets/portfolio/large/exif_exist/20250111_06.jpg"
-                >
-                  <div
-                    class="shot__img"
-                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20250111_06.jpg');"
-                  ></div>
-                </figure>
-                <figure
-                  class="shot reveal"
-                  tabindex="0"
-                  role="button"
-                  style="--ar: 1.352"
-                  data-ar="1.352"
-                  data-exif="vivo X90 Pro+ · 90mm · f/3.5 · 1/1080s · ISO77 · 2025-01-11"
-                  data-src="assets/portfolio/large/exif_exist/20250111_05.jpg"
-                >
-                  <div
-                    class="shot__img"
-                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20250111_05.jpg');"
-                  ></div>
-                </figure>
-                <figure
-                  class="shot reveal"
-                  tabindex="0"
-                  role="button"
-                  style="--ar: 1.343"
-                  data-ar="1.343"
-                  data-exif="vivo X90 Pro+ · 90mm · f/3.5 · 1/1099s · ISO59 · 2025-01-11"
-                  data-src="assets/portfolio/large/exif_exist/20250111_04.jpg"
-                >
-                  <div
-                    class="shot__img"
-                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20250111_04.jpg');"
-                  ></div>
-                </figure>
-                <figure
-                  class="shot reveal"
-                  tabindex="0"
-                  role="button"
-                  style="--ar: 1.335"
-                  data-ar="1.335"
-                  data-exif="vivo X90 Pro+ · 50mm · f/1.6 · 1/2000s · ISO157 · 2025-01-11"
-                  data-src="assets/portfolio/large/exif_exist/20250111_03.jpg"
-                >
-                  <div
-                    class="shot__img"
-                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20250111_03.jpg');"
-                  ></div>
-                </figure>
-                <figure
-                  class="shot reveal"
-                  tabindex="0"
-                  role="button"
-                  style="--ar: 1.339"
-                  data-ar="1.339"
-                  data-exif="vivo X90 Pro+ · 50mm · f/1.6 · 1/1779s · ISO87 · 2025-01-11"
-                  data-src="assets/portfolio/large/exif_exist/20250111_02.jpg"
-                >
-                  <div
-                    class="shot__img"
-                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20250111_02.jpg');"
-                  ></div>
-                </figure>
-                <figure
-                  class="shot reveal"
-                  tabindex="0"
-                  role="button"
-                  style="--ar: 0.745"
-                  data-ar="0.745"
-                  data-exif="vivo X90 Pro+ · 257mm · f/3.5 · 1/221s · ISO100 · 2025-01-11"
-                  data-src="assets/portfolio/large/exif_exist/20250111_01.jpg"
-                >
-                  <div
-                    class="shot__img"
-                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20250111_01.jpg');"
-                  ></div>
-                </figure>
-                <div class="pf-filler" aria-hidden="true"></div>
+              <div class="year-body">
+                <div class="month-group">
+                  <div class="month-label">8月<span class="month-rule" aria-hidden="true"></span></div>
+                  <div class="pf-grid">
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.87"
+                      data-ar="0.87"
+                      data-date="8.27"
+                      data-place="广东省广州市 · 越秀公园"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20250827_193918广东省广州市·越秀公园.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20250827_193918广东省广州市·越秀公园.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.333"
+                      data-ar="1.333"
+                      data-date="8.27"
+                      data-place="广东省广州市 · 越秀公园"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20250827_191624广东省广州市·越秀公园.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20250827_191624广东省广州市·越秀公园.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.75"
+                      data-ar="0.75"
+                      data-date="8.27"
+                      data-place="广东省广州市 · 越秀公园"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20250827_191327广东省广州市·越秀公园.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20250827_191327广东省广州市·越秀公园.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.75"
+                      data-ar="0.75"
+                      data-date="8.27"
+                      data-place="广东省广州市 · 越秀公园"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20250827_170805广东省广州市·越秀公园.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20250827_170805广东省广州市·越秀公园.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.333"
+                      data-ar="1.333"
+                      data-date="8.27"
+                      data-place="广东省广州市 · 越秀公园"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20250827_170350广东省广州市·越秀公园.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20250827_170350广东省广州市·越秀公园.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.333"
+                      data-ar="1.333"
+                      data-date="8.27"
+                      data-place="广东省广州市 · 越秀公园"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20250827_170228_1广东省广州市·越秀公园.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20250827_170228_1广东省广州市·越秀公园.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.75"
+                      data-ar="0.75"
+                      data-date="8.27"
+                      data-place="广东省广州市 · 越秀公园"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20250827_170009广东省广州市·越秀公园.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20250827_170009广东省广州市·越秀公园.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.333"
+                      data-ar="1.333"
+                      data-date="8.27"
+                      data-place="广东省广州市 · 越秀公园"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20250827_164819广东省广州市·越秀公园.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20250827_164819广东省广州市·越秀公园.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.333"
+                      data-ar="1.333"
+                      data-date="8.27"
+                      data-place="广东省广州市 · 越秀公园"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20250827_160707广东省广州市·越秀公园.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20250827_160707广东省广州市·越秀公园.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.333"
+                      data-ar="1.333"
+                      data-date="8.27"
+                      data-place="广东省广州市 · 越秀公园"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20250827_160110广东省广州市·越秀公园.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20250827_160110广东省广州市·越秀公园.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.333"
+                      data-ar="1.333"
+                      data-date="8.27"
+                      data-place="广东省广州市 · 越秀公园"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20250827_154848广东省广州市·越秀公园.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20250827_154848广东省广州市·越秀公园.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.75"
+                      data-ar="0.75"
+                      data-date="8.27"
+                      data-place="广东省广州市 · 越秀公园"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20250827_153147广东省广州市·越秀公园.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20250827_153147广东省广州市·越秀公园.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.333"
+                      data-ar="1.333"
+                      data-date="8.27"
+                      data-place="广东省广州市 · 越秀公园"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20250827_140005广东省广州市·越秀公园.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20250827_140005广东省广州市·越秀公园.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.75"
+                      data-ar="0.75"
+                      data-date="8.17"
+                      data-place="广东省广州市 · 越秀公园"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20250817_200347广东省广州市·越秀公园.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20250817_200347广东省广州市·越秀公园.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.75"
+                      data-ar="0.75"
+                      data-date="8.17"
+                      data-place="广东省广州市 · 越秀公园"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20250817_200237广东省广州市·越秀公园.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20250817_200237广东省广州市·越秀公园.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.75"
+                      data-ar="0.75"
+                      data-date="8.17"
+                      data-place="广东省广州市 · 越秀公园"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20250817_195607广东省广州市·越秀公园.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20250817_195607广东省广州市·越秀公园.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.333"
+                      data-ar="1.333"
+                      data-date="8.17"
+                      data-place="广东省广州市 · 中山纪念堂"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20250817_194129广东省广州市·中山纪念堂.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20250817_194129广东省广州市·中山纪念堂.jpg');"
+                      ></div>
+                    </figure>
+                    <div class="pf-filler" aria-hidden="true"></div>
+                  </div>
+                </div>
+                <div class="month-group">
+                  <div class="month-label">7月<span class="month-rule" aria-hidden="true"></span></div>
+                  <div class="pf-grid">
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.75"
+                      data-ar="0.75"
+                      data-date="7.13"
+                      data-place="广东省广州市"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20250713_173602广东省广州市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20250713_173602广东省广州市.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.75"
+                      data-ar="0.75"
+                      data-date="7.08"
+                      data-place="广东省广州市"
+                      data-src="assets/portfolio/large/exif_exist/20250708_01-广东省广州市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/20250708_01-广东省广州市.jpg');"
+                      ></div>
+                    </figure>
+                    <div class="pf-filler" aria-hidden="true"></div>
+                  </div>
+                </div>
+                <div class="month-group">
+                  <div class="month-label">2月<span class="month-rule" aria-hidden="true"></span></div>
+                  <div class="pf-grid">
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 2.216"
+                      data-ar="2.216"
+                      data-date="2.03"
+                      data-place="广东省阳江市 · 鸡笼顶"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20250203_152007广东省阳江市·鸡笼顶.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20250203_152007广东省阳江市·鸡笼顶.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.333"
+                      data-ar="1.333"
+                      data-date="2.03"
+                      data-place="广东省阳江市 · 鸡笼顶"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20250203_144624广东省阳江市·鸡笼顶.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20250203_144624广东省阳江市·鸡笼顶.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.61"
+                      data-ar="0.61"
+                      data-date="2.03"
+                      data-place="广东省阳江市 · 鸡笼顶"
+                      data-src="assets/portfolio/large/exif_exist/20250203_02-广东省阳江市·鸡笼顶.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/20250203_02-广东省阳江市·鸡笼顶.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.333"
+                      data-ar="1.333"
+                      data-date="2.03"
+                      data-place="广东省阳江市 · 鸡笼顶"
+                      data-src="assets/portfolio/large/exif_exist/20250203_01-广东省阳江市·鸡笼顶.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/20250203_01-广东省阳江市·鸡笼顶.jpg');"
+                      ></div>
+                    </figure>
+                    <div class="pf-filler" aria-hidden="true"></div>
+                  </div>
+                </div>
+                <div class="month-group">
+                  <div class="month-label">1月<span class="month-rule" aria-hidden="true"></span></div>
+                  <div class="pf-grid">
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.347"
+                      data-ar="1.347"
+                      data-date="1.11"
+                      data-place="广东省广州市"
+                      data-src="assets/portfolio/large/exif_exist/20250111_07-广东省广州市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/20250111_07-广东省广州市.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.75"
+                      data-ar="0.75"
+                      data-date="1.11"
+                      data-place="广东省广州市"
+                      data-src="assets/portfolio/large/exif_exist/20250111_06-广东省广州市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/20250111_06-广东省广州市.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.352"
+                      data-ar="1.352"
+                      data-date="1.11"
+                      data-place="广东省广州市"
+                      data-src="assets/portfolio/large/exif_exist/20250111_05-广东省广州市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/20250111_05-广东省广州市.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.343"
+                      data-ar="1.343"
+                      data-date="1.11"
+                      data-place="广东省广州市"
+                      data-src="assets/portfolio/large/exif_exist/20250111_04-广东省广州市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/20250111_04-广东省广州市.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.335"
+                      data-ar="1.335"
+                      data-date="1.11"
+                      data-place="广东省广州市"
+                      data-src="assets/portfolio/large/exif_exist/20250111_03-广东省广州市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/20250111_03-广东省广州市.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.339"
+                      data-ar="1.339"
+                      data-date="1.11"
+                      data-place="广东省广州市"
+                      data-src="assets/portfolio/large/exif_exist/20250111_02-广东省广州市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/20250111_02-广东省广州市.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.745"
+                      data-ar="0.745"
+                      data-date="1.11"
+                      data-place="广东省广州市"
+                      data-src="assets/portfolio/large/exif_exist/20250111_01-广东省广州市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/20250111_01-广东省广州市.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.168"
+                      data-ar="1.168"
+                      data-date="1.10"
+                      data-place="广东省广州市"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20250110_152948广东省广州市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20250110_152948广东省广州市.jpg');"
+                      ></div>
+                    </figure>
+                    <div class="pf-filler" aria-hidden="true"></div>
+                  </div>
+                </div>
               </div>
             </div>
 
             <div class="year-group">
               <div class="year-label">2024</div>
-              <div class="pf-grid">
-                <figure
-                  class="shot reveal"
-                  tabindex="0"
-                  role="button"
-                  style="--ar: 1.333"
-                  data-ar="1.333"
-                  data-exif="vivo X90 Pro+ · 23mm · f/1.75 · 1/60s · ISO10000 · 2024-12-31"
-                  data-src="assets/portfolio/large/exif_exist/20241231_01.jpg"
-                >
-                  <div
-                    class="shot__img"
-                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20241231_01.jpg');"
-                  ></div>
-                </figure>
-                <figure
-                  class="shot reveal"
-                  tabindex="0"
-                  role="button"
-                  style="--ar: 1.778"
-                  data-ar="1.778"
-                  data-exif="vivo X90 Pro+ · 23mm · f/1.75 · 1/17s · ISO2357 · 2024-10-02"
-                  data-src="assets/portfolio/large/exif_exist/20241002_02.jpg"
-                >
-                  <div
-                    class="shot__img"
-                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20241002_02.jpg');"
-                  ></div>
-                </figure>
-                <figure
-                  class="shot reveal"
-                  tabindex="0"
-                  role="button"
-                  style="--ar: 1.778"
-                  data-ar="1.778"
-                  data-exif="vivo X90 Pro+ · 257mm · f/3.5 · 1/114s · ISO69 · 2024-10-02"
-                  data-src="assets/portfolio/large/exif_exist/20241002_01.jpg"
-                >
-                  <div
-                    class="shot__img"
-                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20241002_01.jpg');"
-                  ></div>
-                </figure>
-                <div class="pf-filler" aria-hidden="true"></div>
+              <div class="year-body">
+                <div class="month-group">
+                  <div class="month-label">12月<span class="month-rule" aria-hidden="true"></span></div>
+                  <div class="pf-grid">
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.333"
+                      data-ar="1.333"
+                      data-date="12.31"
+                      data-place="广东省广州市"
+                      data-src="assets/portfolio/large/exif_exist/20241231_01-广东省广州市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/20241231_01-广东省广州市.jpg');"
+                      ></div>
+                    </figure>
+                    <div class="pf-filler" aria-hidden="true"></div>
+                  </div>
+                </div>
+                <div class="month-group">
+                  <div class="month-label">10月<span class="month-rule" aria-hidden="true"></span></div>
+                  <div class="pf-grid">
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.778"
+                      data-ar="1.778"
+                      data-date="10.02"
+                      data-place="广西壮族自治区桂林市"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20241002_172854广西壮族自治区桂林市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20241002_172854广西壮族自治区桂林市.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.333"
+                      data-ar="1.333"
+                      data-date="10.02"
+                      data-place="广西壮族自治区桂林市"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20241002_170757广西壮族自治区桂林市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20241002_170757广西壮族自治区桂林市.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.75"
+                      data-ar="0.75"
+                      data-date="10.02"
+                      data-place="广西壮族自治区桂林市"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20241002_082025广西壮族自治区桂林市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20241002_082025广西壮族自治区桂林市.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.778"
+                      data-ar="1.778"
+                      data-date="10.02"
+                      data-place="广西壮族自治区桂林市"
+                      data-src="assets/portfolio/large/exif_exist/20241002_02-广西壮族自治区桂林市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/20241002_02-广西壮族自治区桂林市.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.778"
+                      data-ar="1.778"
+                      data-date="10.02"
+                      data-place="广西壮族自治区桂林市"
+                      data-src="assets/portfolio/large/exif_exist/20241002_01-广西壮族自治区桂林市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/20241002_01-广西壮族自治区桂林市.jpg');"
+                      ></div>
+                    </figure>
+                    <div class="pf-filler" aria-hidden="true"></div>
+                  </div>
+                </div>
+                <div class="month-group">
+                  <div class="month-label">9月<span class="month-rule" aria-hidden="true"></span></div>
+                  <div class="pf-grid">
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.333"
+                      data-ar="1.333"
+                      data-date="9.13"
+                      data-place="广东省广州市"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20240913_102837广东省广州市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20240913_102837广东省广州市.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.333"
+                      data-ar="1.333"
+                      data-date="9.12"
+                      data-place="广东省珠海市"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20240912_134816广东省珠海市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20240912_134816广东省珠海市.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.333"
+                      data-ar="1.333"
+                      data-date="9.12"
+                      data-place="广东省珠海市"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20240912_134107广东省珠海市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20240912_134107广东省珠海市.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.75"
+                      data-ar="0.75"
+                      data-date="9.12"
+                      data-place="广东省珠海市"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20240912_120610广东省珠海市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20240912_120610广东省珠海市.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.333"
+                      data-ar="1.333"
+                      data-date="9.12"
+                      data-place="广东省珠海市"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20240912_120435广东省珠海市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20240912_120435广东省珠海市.jpg');"
+                      ></div>
+                    </figure>
+                    <div class="pf-filler" aria-hidden="true"></div>
+                  </div>
+                </div>
               </div>
             </div>
 
             <div class="year-group">
               <div class="year-label">2023</div>
-              <div class="pf-grid">
-                <figure
-                  class="shot reveal"
-                  tabindex="0"
-                  role="button"
-                  style="--ar: 1.333"
-                  data-ar="1.333"
-                  data-exif="HUAWEI P50 Pro · 27mm · f/1.8 · 1/603s · ISO50 · 2023-09-18"
-                  data-src="assets/portfolio/large/exif_exist/20230918_01.jpg"
-                >
-                  <div
-                    class="shot__img"
-                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20230918_01.jpg');"
-                  ></div>
-                </figure>
-                <figure
-                  class="shot reveal"
-                  tabindex="0"
-                  role="button"
-                  style="--ar: 1.5"
-                  data-ar="1.5"
-                  data-exif="exif已丢失"
-                  data-src="assets/portfolio/large/exif_lost/20230806_03.jpg"
-                >
-                  <div
-                    class="shot__img"
-                    style="background-image: url('assets/portfolio/thumbs/exif_lost/20230806_03.jpg');"
-                  ></div>
-                </figure>
-                <figure
-                  class="shot reveal"
-                  tabindex="0"
-                  role="button"
-                  style="--ar: 1.5"
-                  data-ar="1.5"
-                  data-exif="SONY α6000 · 202mm · f/13 · 1/100s · ISO800 · 2023-08-06"
-                  data-src="assets/portfolio/large/exif_exist/20230806_02.jpg"
-                >
-                  <div
-                    class="shot__img"
-                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20230806_02.jpg');"
-                  ></div>
-                </figure>
-                <figure
-                  class="shot reveal"
-                  tabindex="0"
-                  role="button"
-                  style="--ar: 0.667"
-                  data-ar="0.667"
-                  data-exif="exif已丢失"
-                  data-src="assets/portfolio/large/exif_lost/20230806_02.jpg"
-                >
-                  <div
-                    class="shot__img"
-                    style="background-image: url('assets/portfolio/thumbs/exif_lost/20230806_02.jpg');"
-                  ></div>
-                </figure>
-                <figure
-                  class="shot reveal"
-                  tabindex="0"
-                  role="button"
-                  style="--ar: 1.5"
-                  data-ar="1.5"
-                  data-exif="SONY α6000 · 202mm · f/20 · 1/60s · ISO100 · 2023-08-06"
-                  data-src="assets/portfolio/large/exif_exist/20230806_01.jpg"
-                >
-                  <div
-                    class="shot__img"
-                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20230806_01.jpg');"
-                  ></div>
-                </figure>
-                <figure
-                  class="shot reveal"
-                  tabindex="0"
-                  role="button"
-                  style="--ar: 1.5"
-                  data-ar="1.5"
-                  data-exif="exif已丢失"
-                  data-src="assets/portfolio/large/exif_lost/20230805_03.jpg"
-                >
-                  <div
-                    class="shot__img"
-                    style="background-image: url('assets/portfolio/thumbs/exif_lost/20230805_03.jpg');"
-                  ></div>
-                </figure>
-                <figure
-                  class="shot reveal"
-                  tabindex="0"
-                  role="button"
-                  style="--ar: 0.667"
-                  data-ar="0.667"
-                  data-exif="exif已丢失"
-                  data-src="assets/portfolio/large/exif_lost/20230805_02.jpg"
-                >
-                  <div
-                    class="shot__img"
-                    style="background-image: url('assets/portfolio/thumbs/exif_lost/20230805_02.jpg');"
-                  ></div>
-                </figure>
-                <figure
-                  class="shot reveal"
-                  tabindex="0"
-                  role="button"
-                  style="--ar: 0.667"
-                  data-ar="0.667"
-                  data-exif="exif已丢失"
-                  data-src="assets/portfolio/large/exif_lost/20230723_01.jpg"
-                >
-                  <div
-                    class="shot__img"
-                    style="background-image: url('assets/portfolio/thumbs/exif_lost/20230723_01.jpg');"
-                  ></div>
-                </figure>
-                <figure
-                  class="shot reveal"
-                  tabindex="0"
-                  role="button"
-                  style="--ar: 1.413"
-                  data-ar="1.413"
-                  data-exif="exif已丢失"
-                  data-src="assets/portfolio/large/exif_lost/20230414_01.jpg"
-                >
-                  <div
-                    class="shot__img"
-                    style="background-image: url('assets/portfolio/thumbs/exif_lost/20230414_01.jpg');"
-                  ></div>
-                </figure>
-                <figure
-                  class="shot reveal"
-                  tabindex="0"
-                  role="button"
-                  style="--ar: 0.749"
-                  data-ar="0.749"
-                  data-exif="exif已丢失"
-                  data-src="assets/portfolio/large/exif_lost/20230412_01.jpg"
-                >
-                  <div
-                    class="shot__img"
-                    style="background-image: url('assets/portfolio/thumbs/exif_lost/20230412_01.jpg');"
-                  ></div>
-                </figure>
-                <figure
-                  class="shot reveal"
-                  tabindex="0"
-                  role="button"
-                  style="--ar: 0.75"
-                  data-ar="0.75"
-                  data-exif="HUAWEI P50 Pro · 95mm · f/3.5 · 1/24s · ISO500 · 2023-04-11"
-                  data-src="assets/portfolio/large/exif_exist/20230411_02.jpg"
-                >
-                  <div
-                    class="shot__img"
-                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20230411_02.jpg');"
-                  ></div>
-                </figure>
-                <figure
-                  class="shot reveal"
-                  tabindex="0"
-                  role="button"
-                  style="--ar: 0.751"
-                  data-ar="0.751"
-                  data-exif="exif已丢失"
-                  data-src="assets/portfolio/large/exif_lost/20230411_01.jpg"
-                >
-                  <div
-                    class="shot__img"
-                    style="background-image: url('assets/portfolio/thumbs/exif_lost/20230411_01.jpg');"
-                  ></div>
-                </figure>
-                <div class="pf-filler" aria-hidden="true"></div>
+              <div class="year-body">
+                <div class="month-group">
+                  <div class="month-label">9月<span class="month-rule" aria-hidden="true"></span></div>
+                  <div class="pf-grid">
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.333"
+                      data-ar="1.333"
+                      data-date="9.21"
+                      data-place="广东省韶关市"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20230921_175537广东省韶关市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20230921_175537广东省韶关市.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.333"
+                      data-ar="1.333"
+                      data-date="9.21"
+                      data-place="广东省韶关市"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20230921_173835_1广东省韶关市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20230921_173835_1广东省韶关市.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.333"
+                      data-ar="1.333"
+                      data-date="9.21"
+                      data-place="广东省梅州市"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20230921_093642广东省梅州市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20230921_093642广东省梅州市.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.333"
+                      data-ar="1.333"
+                      data-date="9.19"
+                      data-place="广东省潮州市"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20230919_181845广东省潮州市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20230919_181845广东省潮州市.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.333"
+                      data-ar="1.333"
+                      data-date="9.19"
+                      data-place="广东省汕头市"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20230919_103057广东省汕头市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20230919_103057广东省汕头市.jpg');"
+                      ></div>
+                    </figure>
+                    <div class="pf-filler" aria-hidden="true"></div>
+                  </div>
+                </div>
+                <div class="month-group">
+                  <div class="month-label">8月<span class="month-rule" aria-hidden="true"></span></div>
+                  <div class="pf-grid">
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.5"
+                      data-ar="1.5"
+                      data-date="8.06"
+                      data-place="广东省广州市 · 白云山"
+                      data-src="assets/portfolio/large/exif_lost/20230806_03广东省广州市·白云山.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_lost/20230806_03广东省广州市·白云山.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.667"
+                      data-ar="0.667"
+                      data-date="8.06"
+                      data-place="广东省广州市 · 白云山"
+                      data-src="assets/portfolio/large/exif_lost/20230806_02广东省广州市·白云山.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_lost/20230806_02广东省广州市·白云山.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.5"
+                      data-ar="1.5"
+                      data-date="8.06"
+                      data-place="广东省广州市 · 白云山"
+                      data-src="assets/portfolio/large/exif_exist/20230806_02-广东省广州市·白云山.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/20230806_02-广东省广州市·白云山.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.5"
+                      data-ar="1.5"
+                      data-date="8.06"
+                      data-place="广东省广州市 · 白云山"
+                      data-src="assets/portfolio/large/exif_exist/20230806_01-广东省广州市·白云山.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/20230806_01-广东省广州市·白云山.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.5"
+                      data-ar="1.5"
+                      data-date="8.05"
+                      data-place="广东省广州市 · 白云山"
+                      data-src="assets/portfolio/large/exif_lost/20230805_03广东省广州市·白云山.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_lost/20230805_03广东省广州市·白云山.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.667"
+                      data-ar="0.667"
+                      data-date="8.05"
+                      data-place="广东省广州市 · 白云山"
+                      data-src="assets/portfolio/large/exif_lost/20230805_02广东省广州市·白云山.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_lost/20230805_02广东省广州市·白云山.jpg');"
+                      ></div>
+                    </figure>
+                    <div class="pf-filler" aria-hidden="true"></div>
+                  </div>
+                </div>
+                <div class="month-group">
+                  <div class="month-label">7月<span class="month-rule" aria-hidden="true"></span></div>
+                  <div class="pf-grid">
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.667"
+                      data-ar="0.667"
+                      data-date="7.23"
+                      data-place="广东省广州市"
+                      data-src="assets/portfolio/large/exif_lost/20230723_01广东省广州市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_lost/20230723_01广东省广州市.jpg');"
+                      ></div>
+                    </figure>
+                    <div class="pf-filler" aria-hidden="true"></div>
+                  </div>
+                </div>
+                <div class="month-group">
+                  <div class="month-label">4月<span class="month-rule" aria-hidden="true"></span></div>
+                  <div class="pf-grid">
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.413"
+                      data-ar="1.413"
+                      data-date="4.14"
+                      data-place="广东省惠州市"
+                      data-src="assets/portfolio/large/exif_lost/20230414_01广东省惠州市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_lost/20230414_01广东省惠州市.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.333"
+                      data-ar="1.333"
+                      data-date="4.12"
+                      data-place="广东省惠州市"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20230412_204631广东省惠州市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20230412_204631广东省惠州市.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.75"
+                      data-ar="0.75"
+                      data-date="4.12"
+                      data-place="广东省惠州市"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20230412_175757广东省惠州市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20230412_175757广东省惠州市.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.75"
+                      data-ar="0.75"
+                      data-date="4.12"
+                      data-place="广东省惠州市"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20230412_171729广东省惠州市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20230412_171729广东省惠州市.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.749"
+                      data-ar="0.749"
+                      data-date="4.12"
+                      data-place="广东省惠州市"
+                      data-src="assets/portfolio/large/exif_lost/20230412_01广东省惠州市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_lost/20230412_01广东省惠州市.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.333"
+                      data-ar="1.333"
+                      data-date="4.11"
+                      data-place="广东省韶关市 · 丹霞山"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20230411_181102广东省韶关市·丹霞山.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20230411_181102广东省韶关市·丹霞山.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.75"
+                      data-ar="0.75"
+                      data-date="4.11"
+                      data-place="广东省韶关市 · 丹霞山"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20230411_105817广东省韶关市·丹霞山.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20230411_105817广东省韶关市·丹霞山.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.75"
+                      data-ar="0.75"
+                      data-date="4.11"
+                      data-place="广东省韶关市 · 丹霞山"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20230411_105656广东省韶关市·丹霞山.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20230411_105656广东省韶关市·丹霞山.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.333"
+                      data-ar="1.333"
+                      data-date="4.11"
+                      data-place="广东省韶关市 · 丹霞山"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20230411_091709广东省韶关市·丹霞山.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20230411_091709广东省韶关市·丹霞山.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.75"
+                      data-ar="0.75"
+                      data-date="4.11"
+                      data-place="广东省韶关市"
+                      data-src="assets/portfolio/large/exif_exist/20230411_02-广东省韶关市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/20230411_02-广东省韶关市.jpg');"
+                      ></div>
+                    </figure>
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.751"
+                      data-ar="0.751"
+                      data-date="4.11"
+                      data-place="广东省韶关市 · 丹霞山"
+                      data-src="assets/portfolio/large/exif_lost/20230411_01广东省韶关市·丹霞山.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_lost/20230411_01广东省韶关市·丹霞山.jpg');"
+                      ></div>
+                    </figure>
+                    <div class="pf-filler" aria-hidden="true"></div>
+                  </div>
+                </div>
+                <div class="month-group">
+                  <div class="month-label">2月<span class="month-rule" aria-hidden="true"></span></div>
+                  <div class="pf-grid">
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.75"
+                      data-ar="0.75"
+                      data-date="2.01"
+                      data-place="广东省茂名市"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20230201_111920广东省茂名市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20230201_111920广东省茂名市.jpg');"
+                      ></div>
+                    </figure>
+                    <div class="pf-filler" aria-hidden="true"></div>
+                  </div>
+                </div>
+                <div class="month-group">
+                  <div class="month-label">1月<span class="month-rule" aria-hidden="true"></span></div>
+                  <div class="pf-grid">
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.75"
+                      data-ar="0.75"
+                      data-date="1.30"
+                      data-place="广东省茂名市"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20230130_154020广东省茂名市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20230130_154020广东省茂名市.jpg');"
+                      ></div>
+                    </figure>
+                    <div class="pf-filler" aria-hidden="true"></div>
+                  </div>
+                </div>
               </div>
             </div>
 
             <div class="year-group">
               <div class="year-label">2022</div>
-              <div class="pf-grid">
-                <figure
-                  class="shot reveal"
-                  tabindex="0"
-                  role="button"
-                  style="--ar: 0.792"
-                  data-ar="0.792"
-                  data-exif="HUAWEI P50 Pro · 27mm · f/1.8 · 1/1531s · ISO50 · 2022-10-25"
-                  data-src="assets/portfolio/large/exif_exist/20221025_01.jpg"
-                >
-                  <div
-                    class="shot__img"
-                    style="background-image: url('assets/portfolio/thumbs/exif_exist/20221025_01.jpg');"
-                  ></div>
-                </figure>
-                <div class="pf-filler" aria-hidden="true"></div>
+              <div class="year-body">
+                <div class="month-group">
+                  <div class="month-label">10月<span class="month-rule" aria-hidden="true"></span></div>
+                  <div class="pf-grid">
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 0.792"
+                      data-ar="0.792"
+                      data-date="10.25"
+                      data-place="广东省广州市"
+                      data-src="assets/portfolio/large/exif_exist/20221025_01-广东省广州市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/20221025_01-广东省广州市.jpg');"
+                      ></div>
+                    </figure>
+                    <div class="pf-filler" aria-hidden="true"></div>
+                  </div>
+                </div>
+                <div class="month-group">
+                  <div class="month-label">6月<span class="month-rule" aria-hidden="true"></span></div>
+                  <div class="pf-grid">
+                    <figure
+                      class="shot reveal"
+                      tabindex="0"
+                      role="button"
+                      style="--ar: 1.333"
+                      data-ar="1.333"
+                      data-date="6.10"
+                      data-place="广东省茂名市"
+                      data-src="assets/portfolio/large/exif_exist/IMG_20220610_064925-1-广东省茂名市.jpg"
+                    >
+                      <div
+                        class="shot__img"
+                        style="background-image: url('assets/portfolio/thumbs/exif_exist/IMG_20220610_064925-1-广东省茂名市.jpg');"
+                      ></div>
+                    </figure>
+                    <div class="pf-filler" aria-hidden="true"></div>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <p class="pf-note mono">所有焦距均为 35mm 等效焦距</p>
           </div>
         </div>
       </section>
@@ -606,31 +1553,14 @@
           </div>
         </div>
         <figcaption class="lb-meta">
-          <span class="lb-exif" id="lbExifInline"
-            ><img
-              class="lb-exif__icon"
-              src="assets/icons/shutter.png"
-              alt=""
-              draggable="false"
-            /><span id="lbExif"></span
-          ></span>
-
-          <button
-            class="lb-exif__btn is-off"
-            id="lbExifBtn"
-            type="button"
-            aria-expanded="false"
-            aria-controls="lbSheet"
-          >
+          <span class="lb-place">
             <img
-              class="lb-exif__btn-icon"
-              src="assets/icons/shutter.png"
+              class="lb-place__icon"
+              src="assets/icons/pin.png"
               alt=""
               draggable="false"
-            /><span>查看拍摄参数</span>
-          </button>
-
-          <span class="lb-exif__none is-off" id="lbExifNone">EXIF 已丢失</span>
+            /><span id="lbPlaceText">地点待补</span>
+          </span>
         </figcaption>
         <div class="lb-zoom" aria-label="缩放">
           <div class="lb-zoom__bar" id="lbBar">
@@ -640,18 +1570,6 @@
         </div>
         <p class="lb-hint">滑动切换 · 双指缩放</p>
       </figure>
-
-      <div class="lb-sheet" id="lbSheet" role="group" aria-label="拍摄参数">
-        <div class="lb-sheet__head">
-          <span class="lb-sheet__title">拍摄参数 · EXIF</span>
-          <button class="lb-sheet__close" id="lbSheetClose" type="button" aria-label="收起参数">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M6 6l12 12M18 6L6 18" />
-            </svg>
-          </button>
-        </div>
-        <dl class="lb-sheet__grid" id="lbSheetGrid"></dl>
-      </div>
     </div>
 
     <script src="assets/main.js"></script>

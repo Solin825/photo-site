@@ -800,6 +800,20 @@ body.intro-playing { overflow: hidden; }
   line-height: 1;
 }
 
+/* 年份下面再分月份：左边年份照旧钉住，右边按月份一段段往下排，
+   月标题是一行小字 + 一根伸到右边的细线（朋友圈相册那种节奏） */
+.year-body { display: grid; gap: clamp(18px, 2.2vw, 30px); }
+
+.month-group { display: grid; gap: clamp(8px, 1vw, 12px); }
+.month-label {
+  display: flex; align-items: center; gap: 12px;
+  font-family: var(--mono);
+  font-size: 10.5px; letter-spacing: .2em;
+  color: var(--muted);
+  line-height: 1;
+}
+.month-rule { flex: 1 1 auto; height: 1px; background: var(--line-soft); }
+
 /* 等高照片墙：缩略图是原图的等比缩小，每行高度一致，宽度随原图比例变化 */
 .pf-grid {
   display: flex;
@@ -846,7 +860,7 @@ body.intro-playing { overflow: hidden; }
   pointer-events: none;
 }
 .shot::after {
-  content: attr(data-num);
+  content: attr(data-date);
   position: absolute; left: 14px; bottom: 12px;
   font-family: Arial, Helvetica, sans-serif; font-size: 11.5px;
   letter-spacing: .22em;
@@ -959,10 +973,10 @@ body.intro-playing { overflow: hidden; }
   text-align: center;
   min-height: 34px;
 }
-/* 桌面：一行参数。灯箱背景是被模糊放大的照片，颜色偏亮，
-   所以文字用接近白色 + 暗投影，才能和背景拉开区分度 */
-.lb-exif {
-  display: inline-flex; align-items: center; gap: 8px;
+/* 照片下方那一行：拍摄地点（机身参数已不再显示）。
+   灯箱背景是被模糊放大的照片、颜色偏亮，所以文字用接近白色 + 暗投影才拉得开 */
+.lb-place {
+  display: inline-flex; align-items: center;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 400;
   font-size: 11.5px;
@@ -970,83 +984,11 @@ body.intro-playing { overflow: hidden; }
   color: rgba(245, 242, 233, .92);
   text-shadow: 0 1px 10px rgba(0, 0, 0, .7), 0 0 2px rgba(0, 0, 0, .5);
 }
-.lb-exif__icon { width: 14px; height: 14px; flex: 0 0 auto; user-select: none; -webkit-user-drag: none; }
-
-/* 手机：只露一个文字按钮（图标在左），点开底部参数面板 */
-.lb-exif__btn {
-  display: none;
-  align-items: center; gap: 7px;
-  padding: 4px 2px;
-  font-size: 11.5px; letter-spacing: .12em;
-  color: rgba(245, 242, 233, .92);
-  text-shadow: 0 1px 10px rgba(0, 0, 0, .7);
+.lb-place__icon {
+  width: 13px; height: 13px; flex: 0 0 auto; margin-right: 7px;
+  user-select: none; -webkit-user-drag: none;
 }
-.lb-exif__btn-icon { width: 13px; height: 13px; flex: 0 0 auto; user-select: none; -webkit-user-drag: none; }
-.lb-exif__btn[aria-expanded="true"] { color: #fff; }
-
-/* 没有参数：只留一行字，不出现任何图标 */
-.lb-exif__none {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 11.5px; letter-spacing: .14em;
-  color: rgba(245, 242, 233, .82);
-  text-shadow: 0 1px 10px rgba(0, 0, 0, .7), 0 0 2px rgba(0, 0, 0, .5);
-}
-.is-off { display: none !important; }
-
-/* --- 拍摄参数面板：从底部滑出的抽屉（只有手机叫得出来） --- */
-.lb-sheet {
-  position: absolute;
-  left: 0; right: 0; bottom: 0;
-  z-index: 4;
-  margin: 0 auto;
-  max-width: 720px;
-  padding: 16px 22px 26px;
-  border-radius: 0;
-  border-top: 1px solid var(--line);
-  background: rgba(12, 12, 11, .92);
-  backdrop-filter: blur(22px) saturate(120%);
-  -webkit-backdrop-filter: blur(22px) saturate(120%);
-  box-shadow: 0 -18px 50px -24px rgba(0, 0, 0, .8);
-  transform: translateY(101%);
-  visibility: hidden;
-  transition: transform .36s var(--ease), visibility .36s;
-}
-.lb-sheet.is-open { transform: none; visibility: visible; }
-.lb-sheet__head {
-  display: flex; align-items: center; justify-content: space-between;
-  padding-bottom: 14px;
-}
-.lb-sheet__title {
-  font-family: var(--mono);
-  font-size: 10.5px; letter-spacing: .22em;
-  color: rgba(214, 172, 100, .95); /* 与全站金色呼应 */
-}
-.lb-sheet__close {
-  width: 30px; height: 30px; border-radius: 50%;
-  display: grid; place-items: center;
-  border: 1px solid var(--line);
-  color: var(--ink-2);
-}
-.lb-sheet__close svg { width: 13px; height: 13px; }
-.lb-sheet__grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px 20px;
-  margin: 0; padding: 0;
-}
-.lb-sheet__cell { min-width: 0; }
-.lb-sheet__cell dt {
-  font-family: var(--mono);
-  font-size: 9.5px; letter-spacing: .18em;
-  color: var(--muted);
-  margin-bottom: 5px;
-}
-.lb-sheet__cell dd {
-  margin: 0;
-  font-size: 14.5px; line-height: 1.4;
-  color: var(--ink);
-  word-break: break-all;
-}
+/* 日期已不再显示（2026-11 起只留地点），相关样式一并删掉 */
 
 /* 手势提示：只有手机显示 */
 .lb-hint {
@@ -1105,14 +1047,6 @@ body.intro-playing { overflow: hidden; }
   font-family: var(--mono); font-size: 9px;
   letter-spacing: .1em; color: var(--muted);
   min-width: 34px;
-}
-
-/* --- 页底焦距说明小注 --- */
-.pf-note {
-  margin-top: clamp(28px, 4vw, 48px);
-  font-size: 9.5px;
-  letter-spacing: .18em;
-  color: var(--muted);
 }
 
 /* ---------- 14 Footer：页脚 / 回到顶部 / 悬浮滚动条 ---------- */
@@ -1283,6 +1217,8 @@ body.is-leaving .site-footer {
   .pf-grid { --wall-h: 112px; gap: 8px; }
   .shot::before { height: 46px; }
   .shot::after { left: 10px; bottom: 8px; font-size: 10px; }
+  /* 手机上没法 hover，日期常显，否则这一层日期等于不存在 */
+  .shot::after { opacity: 1; transform: none; }
 
   .profile { gap: 16px; }
   .avatar { width: 64px; height: 64px; }
@@ -1295,20 +1231,14 @@ body.is-leaving .site-footer {
   .books__body { padding-left: 18px; }
   .to-top-fab { width: 40px; height: 40px; right: 14px; bottom: 14px; }
 
-  /* 灯箱：手机上不显示桌面那一行参数，只露「查看拍摄参数」按钮；
-     有参数时才出现按钮，没参数只有一行「EXIF 已丢失」 */
+  /* 灯箱：照片下面只留一行地点 */
   .lb-nav { width: 30px; height: 30px; }
   .lb-nav svg { width: 13px; height: 13px; }
   .lb-nav--prev { left: 4px; }
   .lb-nav--next { right: 4px; }
   .lb-stage { gap: 10px; }
   .lb-meta { min-height: 26px; gap: 3px; padding: 0 8px; }
-  .lb-exif { display: none; }
-  .lb-exif__btn { display: inline-flex; }
-  .lb-exif__none { font-size: 11px; letter-spacing: .1em; }
-  .lb-sheet { padding: 14px 18px 20px; border-radius: 0; }
-  .lb-sheet__grid { gap: 14px 16px; }
-  .lb-sheet__cell dd { font-size: 14px; }
+  .lb-place { font-size: 11px; letter-spacing: .08em; }
   /* 手机上大图不留投影：模糊背景本来就是照片本身放大，投影会在照片下方糊出一条黑影 */
   .lb-photo { box-shadow: none; }
   .lb-hint { display: block; }
